@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>欢迎应聘:<%= post.title %></title>
+    <!-- Bootstrap Core CSS -->
+    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/bootstrap/cust-css/style.css" rel="stylesheet">
+
+    <link href="/bootstrap/cust-css/site.min.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container">
+    <div></div>
+        
+<form id="userinfo" action="post.php?action=saveziliao" method="post">
+         <div class="item">
+            <div class="itemHead" ><h4>基本资料</h4></div>
+            <div class="idtemBody" >
+              <table width="100%" cellspacing="15" class="submit">
+                <tbody>
+                  <tr>
+                    <td width="17%" align="right"><span class="red">*</span>您的姓名：</td>
+                    <td width="24%" valign="top"><input name="uname" type="text" class="text" id="uname"onfocus="this.className='text1'" onblur="this.className='text'" value="" size="25" maxlength="10"  /></td>
+                    <td width="16%" align="right"><span class="red">*</span>性别：</td>
+                   <td><input type="radio" value="男" name="sex" />先生 <input type="radio" checked="checked" value="女" name="sex" />女士</td>
+                  </tr>
+                  <tr>
+                    <td align="right"><span class="red">*</span>出生日期：</td>
+                    <td><input name="birthday" type="text" class="text" id="birthday"onfocus="this.className='text1'" onclick="SelectDate(this,'yyyy-MM-dd',80,5)" onmouseover="this.className='text1'" onmouseout="this.className='text'" value="" size="25" maxlength="20"/>                    </td>
+                    <td align="right"><span class="red">*</span>民族：</td>
+                    <td width="42%"><select name='minzu' id='minzu' class='text' onfocus="this.className='text1';" onblur="this.className='text';">
+    <option value='0' selected='selected'>--请选择--</option>
+    <option value='500'>汉族</option>
+    <option value='1000'>蒙古族</option>
+    <option value='1500'>彝族</option>
+    <option value='2000'>侗族</option>
+    <option value='2500'>哈萨克族</option>
+    <option value='3000'>畲族</option>
+    <option value='3500'>纳西族</option>
+    <option value='4000'>仫佬族</option>
+    <option value='4500'>仡佬族</option>
+    <option value='5000'>怒族</option>
+    <option value='5500'>保安族</option>
+    <option value='6000'>鄂伦春族</option>
+    <option value='6500'>回族</option>
+    <option value='7000'>壮族</option>
+    <option value='7500'>瑶族</option>
+    <option value='8000'>傣族</option>
+    <option value='8500'>高山族</option>
+    <option value='9000'>景颇族</option>
+    <option value='9500'>羌族</option>
+    <option value='10000'>锡伯族</option>
+    <option value='10500'>乌孜别克族</option>
+    <option value='11000'>裕固族</option>
+    <option value='11500'>赫哲族</option>
+    <option value='12000'>藏族</option>
+    <option value='12500'>布依族</option>
+    <option value='13000'>白族</option>
+    <option value='13500'>黎族</option>
+    <option value='14000'>拉祜族</option>
+    <option value='14500'>柯尔克孜族</option>
+    <option value='15000'>布朗族</option>
+    <option value='15500'>阿昌族</option>
+    <option value='16000'>俄罗斯族</option>
+    <option value='16500'>京族</option>
+    <option value='17000'>门巴族</option>
+    <option value='17500'>维吾尔族</option>
+    <option value='18000'>朝鲜族</option>
+    <option value='18500'>土家族</option>
+    <option value='19000'>傈僳族</option>
+    <option value='19500'>水族</option>
+    <option value='20000'>土族</option>
+    <option value='20500'>撒拉族</option>
+    <option value='21000'>普米族</option>
+    <option value='21500'>鄂温克族</option>
+    <option value='22000'>塔塔尔族</option>
+    <option value='22500'>珞巴族</option>
+    <option value='23000'>苗族</option>
+    <option value='23500'>满族</option>
+    <option value='24000'>哈尼族</option>
+    <option value='24500'>佤族</option>
+    <option value='25000'>东乡族</option>
+    <option value='25500'>达斡尔族</option>
+    <option value='26000'>毛南族</option>
+    <option value='26500'>塔吉克族</option>
+    <option value='27000'>德昂族</option>
+    <option value='27500'>独龙族</option>
+    <option value='28000'>基诺族</option>
+    <option value='28500'>其他</option>
+    <option value='29000'>外国血统</option>
+</select></td>
+                  </tr>
+                  <tr>
+                    <td align="right">身高：</td>
+                    <td><input name='height' type='text' class="text" id='height' style='width:80px' onfocus="this.className='text1'" onblur="this.className='text'" value='' maxlength="4" />                      
+                    厘米</td>
+                    <td align="right" valign="top"><span class="red">*</span>婚姻状况：</td>
+                    <td><select name='marital' id='marital' class='text' onfocus="this.className='text1';" onblur="this.className='text';">
+    <option value='0' selected='selected'>--请选择--</option>
+    <option value='1'>未婚</option>
+    <option value='2'>已婚</option>
+    <option value='3'>保密</option>
+</select></td>
+                  </tr>
+                  <tr>
+                    <td align="right"><span class="red">*</span>目前所在地：</td>
+                    <td colspan="3"><input name="userCity" type="text" class="text" id="userCity" onfocus="displayM('dvStyleList1');this.className='text1'" onblur="this.className='text'" value="" size="25" maxlength="20" /><br />
+<div class="choice" style="display:none;" id="dvStyleList1">
+    <div class="choiceTitle"><a href="javascript:displayM('dvStyleList1');">关闭选单</a>请选择所在地区</div>
+    <div id="ulStyle">
+        <div class="choiceClass">直辖市/特别行政区/国外</div>
+        <ul>
+            <li><a href="javascript:choiceCity('dvStyleList1','北京','userCity')">北京</a></li>
+            <li><a href="javascript:choiceCity('dvStyleList1','上海','userCity')">上海</a></li>
+            <li><a href="javascript:choiceCity('dvStyleList1','天津','userCity')">天津</a></li>
+            <li><a href="javascript:choiceCity('dvStyleList1','重庆','userCity')">重庆</a></li>
+            <li><a href="javascript:choiceCity('dvStyleList1','香港','userCity')">香港</a></li>
+            <li><a href="javascript:choiceCity('dvStyleList1','澳门','userCity')">澳门</a></li>
+            <li><a href="javascript:choiceCity('dvStyleList1','国外','userCity')">国外</a></li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+    <div class="lineDiv"></div>
+    <div id="cityChoice">
+        <div class="choiceClass">其他省市</div><spanid="province">
+        <ul>
+            <li><a href="javascript:choiceProvince('dvStyleList1','河北','userCity')">河北</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','山西','userCity')">山西</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','辽宁','userCity')">辽宁</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','吉林','userCity')">吉林</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','黑龙江','userCity')">黑龙江</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','江苏','userCity')">江苏</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','浙江','userCity')">浙江</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','安徽','userCity')">安徽</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','福建','userCity')">福建</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','江西','userCity')">江西</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','山东','userCity')">山东</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','河南','userCity')">河南</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','湖北','userCity')">湖北</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','湖南','userCity')">湖南</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','广东','userCity')">广东</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','甘肃','userCity')">甘肃</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','陕西','userCity')">陕西</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','内蒙古','userCity')">内蒙古</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','广西','userCity')">广西</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','四川','userCity')">四川</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','贵州','userCity')">贵州</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','云南','userCity')">云南</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','西藏','userCity')">西藏</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','海南','userCity')">海南</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','宁夏','userCity')">宁夏</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','青海','userCity')">青海</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','新疆','userCity')">新疆</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList1','台湾','userCity')">台湾</a></li>
+        </ul>       <div class="clear"></div>
+<div class="lineDiv"></div>
+        <div id="city1"></div>
+    </div>
+    <div class="clear"></div>
+</div>                                      </td>
+                  </tr>
+                  <tr>
+                    <td align="right"><span class="red">*</span>户口所在地：</td>
+                    <td colspan="3"><input name="userHukou" type="text" class="text" id="userHukou" onfocus="displayM('dvStyleList');this.className='text1'" onblur="this.className='text'" value="" size="25" maxlength="20" /><br />
+
+<div class="choice" style="display:none;" id="dvStyleList">
+    <div class="choiceTitle"><a href="javascript:displayM('dvStyleList');">关闭选单</a>请选择所在地区</div>
+    <div id="ulStyle">
+        <div class="choiceClass">直辖市/特别行政区/国外</div>
+        <ul>
+            <li><a href="javascript:choiceCity('dvStyleList','北京','userHukou')">北京</a></li>
+            <li><a href="javascript:choiceCity('dvStyleList','上海','userHukou')">上海</a></li>
+            <li><a href="javascript:choiceCity('dvStyleList','天津','userHukou')">天津</a></li>
+            <li><a href="javascript:choiceCity('dvStyleList','重庆','userHukou')">重庆</a></li>
+            <li><a href="javascript:choiceCity('dvStyleList','香港','userHukou')">香港</a></li>
+            <li><a href="javascript:choiceCity('dvStyleList','澳门','userHukou')">澳门</a></li>
+            <li><a href="javascript:choiceCity('dvStyleList','境外人士','userHukou')">境外人士</a></li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+    <div class="lineDiv"></div>
+    <div id="cityChoice">
+        <div class="choiceClass">其他省市</div><span id="province">
+        <ul>
+            <li><a href="javascript:choiceProvince('dvStyleList','河北','userHukou')">河北</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','山西','userHukou')">山西</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','辽宁','userHukou')">辽宁</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','吉林','userHukou')">吉林</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','黑龙江','userHukou')">黑龙江</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','江苏','userHukou')">江苏</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','浙江','userHukou')">浙江</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','安徽','userHukou')">安徽</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','福建','userHukou')">福建</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','江西','userHukou')">江西</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','山东','userHukou')">山东</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','河南','userHukou')">河南</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','湖北','userHukou')">湖北</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','湖南','userHukou')">湖南</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','广东','userHukou')">广东</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','甘肃','userHukou')">甘肃</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','陕西','userHukou')">陕西</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','内蒙古','userHukou')">内蒙古</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','广西','userHukou')">广西</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','四川','userHukou')">四川</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','贵州','userHukou')">贵州</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','云南','userHukou')">云南</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','西藏','userHukou')">西藏</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','海南','userHukou')">海南</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','宁夏','userHukou')">宁夏</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','青海','userHukou')">青海</a></li>
+            <li><a href="javascript:choiceProvince('dvStyleList','新疆','userHukou')">新疆</a></li>         
+        </ul>       <div class="clear"></div>
+<div class="lineDiv"></div>
+        <div id="city"></div>
+    </div>
+    <div class="clear"></div>
+</div>                                      </td>
+                  </tr>
+                  <tr>
+                    <td align="right"><span class="red">*</span>毕业学校：</td>
+                    <td colspan="3"><input name="school" type="text" class="text" id="school" onfocus="this.className='text1'" onblur="this.className='text'" value="" size="60" maxlength="20" /></td>
+                  </tr>
+                  <tr>
+                    <td align="right">专业：</td>
+                    <td><input name="zhuanye" type="text" class="text" id="zhuanye" onfocus="this.className='text1'" onblur="this.className='text'" value="" maxlength="20" /></td>
+                    <td align="right"><span class="red">*</span>最高学历：</td>
+                    <td>
+<select name='xueli' id='xueli' class='text' onfocus="this.className='text1';" onblur="this.className='text';">
+    <option value='0' selected='selected'>--请选择--</option>
+    <option value='大专'  >大专</option>
+    <option value='本科'  >本科</option>
+    <option value='硕士'  >硕士</option>
+    <option value='博士'  >博士</option>
+    <option value='MBA'  >MBA</option>
+    <option value='初中'  >初中</option>
+    <option value='高中'  >高中</option>
+    <option value='中专'  >中专</option>
+    <option value='其他'  >其他</option>
+</select> </td>
+                  </tr>
+                  <tr>
+                    <td align="right"><span class="red">*</span>工作年限：</td>
+                    <td colspan="3"><input name="experience" type="text" class="text" id="experience" onfocus="this.className='text1'" onblur="this.className='text'" value="" size="3" />
+                    年工作经验</td>
+
+                                        <td width="1%"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <hr>
+          <div class="item">   
+            <div class="itemHead" ><h4>基本资料</h4></div>    
+            <div class="itemBody" >
+              <table width="100%" cellspacing="15" class="submit">
+                <tbody>                 
+                  <tr>
+                    <td width="15%" align="right" valign="top"><span class="red">*</span>联系电话：</td>
+                    <td colspan="3"><input name="tel" type="text" class="text" id="tel"onfocus="this.className='text1'" onblur="this.className='text'" value="" size="25"/>                    </td>
+                  </tr>
+                  <tr>
+                    <td align="right" valign="top"><span class="red">*</span>手机：</td>
+                    <td colspan="3"><input name="mobile" type="text" class="text" id="mobile" onfocus="this.className='text1'" onblur="this.className='text'" value="" size="25" />                    </td>
+                  </tr>
+                  <tr>
+                    <td align="right" valign="top">QQ帐号：</td>
+                    <td colspan="3"><input name="qq" type="text" class="text" id="qq" onfocus="this.className='text1'" onblur="this.className='text'" value="" size="25" />                    </td>
+                  </tr>
+                  <tr>
+                    <td align="right" valign="top"><span class="red">*</span>Email信箱：</td>
+                    <td colspan="3"><input name="email" type="text" class="text" id="email" onfocus="this.className='text1'" onblur="this.className='text'" value="" size="25" /></td>
+                  </tr>
+                  <tr>
+                    <td align="right" valign="top">个人主页：</td>
+                    <td colspan="3"><input name="homepage" type="text" class="text" id="homepage" onfocus="this.className='text1'" onblur="this.className='text'" value="" size="25" />                    </td>
+                  </tr>
+                  <tr>
+                    <td align="right" valign="top">通讯地址：</td>
+                    <td colspan="3"><input name="address" type="text" class="text" id="address" style="width:350px" value="" onfocus="this.className='text1'" onblur="this.className='text'" />                    </td>
+                  </tr>
+                  <tr>
+                    <td align="right" valign="top">邮政编码：</td>
+                    <td colspan="3"><input name="zipcode" type="text" class="text" id="zipcode" onfocus="this.className='text1'" onblur="this.className='text'" value="" size="8"  /></td>
+                  </tr>
+                  <tr>
+                    <td colspan="4" align="right" valign="top"></td>
+                  </tr>
+                  <tr>                    
+                    <td>&nbsp;</td>
+                    <td colspan="2" id="post"><input class="button1" id="button" type="button" style="cursor:pointer;" onclick="saveuserinfo();" value="完成并发送" /></td>
+                    <td><div id="msgTxt"></div></td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td colspan="3"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+</form>
+    <div class="clear"></div>
+  <div class="clear"></div>
+    <!-- Footer -->
+<%-include footer.html%>
+    </div>
+    <!-- jQuery -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

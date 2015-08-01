@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<%
+var ifeditorexist = 0;
+var isloginpage = 0;
+%>
+<%- include header.html %>
+
+<body>
+    <!-- Navigation -->
+<%-include global-navbar.html%>
+<!--[if ie]><script type="text/javascript" src="/vendors/excanvas/excanvas.js"></script><![endif]-->
+    <script src="../node_modules/build/qrcode.js"></script>
+    <canvas id="test"></canvas>
+    <script>
+    var qrcodedraw = new QRCodeLib.QRCodeDraw();
+    qrcodedraw.draw(document.getElementById('test'),"this text will be in the code!", function(error,canvas){
+        if(error){
+            return console.log('Error =( ',error);
+        }
+        console.log('success!');
+        //alert('success');
+    });
+    </script>
+    <img src="<%= url %>">
+    <!-- jQuery -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    </body>
+</html>

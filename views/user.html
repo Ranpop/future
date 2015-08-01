@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<%
+var ifeditorexist = 1;
+var isloginpage = 0;
+%>
+<%- include header.html %>
+
+<body>
+<%-include global-navbar.html%>
+
+    <!-- Page Content -->
+    <div class="container">
+        
+        <div class="row">
+
+            <!-- Blog Entries Column -->
+            <%-include imgpagecontainer.html%>
+            <!-- Blog Sidebar Widgets Column -->
+            <div class="col-md-4">
+            <%-include blogsidebar.html%>
+            </div>
+            </div>
+            <hr>
+    <!-- Footer -->
+    <%-include footer.html%>
+
+    </div>
+    <!-- jQuery -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

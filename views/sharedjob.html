@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><%= post.title %></title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/bootstrap/cust-css/style.css" rel="stylesheet">
+
+</head>
+
+
+<body>
+    <!-- Page Content -->
+    <div class="container">
+    	<div class="divtitle ">
+    		<a><%= post.title %></a>
+    	</div>
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">请扫描二维码直接投递简历！</h4>
+		      </div>
+		      <div class="modal-body">
+				<div class="text-center">
+					<img src="<%= qrcode %>">
+				</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- Modal2 -->
+		<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">上传一份本地已经编辑好的简历：</h4>
+		      </div>
+		      <div class="modal-body">
+				<div class="text-center">
+					<form method='post' action='/upload' enctype='multipart/form-data'>
+						<input type="file" name='file1' />
+						<input type="submit" value="提交"/>
+					</form>
+					<hr>
+					<a href="/sendresumereq/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>">还没有简历？来填写一份吧！</a>
+				</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+    	<ul id="sendresumestick" class="list-inline navbar-static-top">
+			<li>
+				<button type="button" class="btn btn-primary btn-lg" style="background-color:rgba(255,0,0,0.5)" data-toggle="modal" data-target="#myModal">
+  					分享给身边的好友
+				</button>
+			</li>
+			<li>
+				<button type="button" class="btn btn-primary btn-lg" style="background-color:rgba(0,255,0,0.5)" data-toggle="modal" data-target="#myModal2">
+  					自己投简历
+				</button>
+			</li>
+    	</ul>
+		<hr>
+		<div class="articalcontent">
+		<%- post.post %>
+		</div>
+	<hr>
+    <!-- Footer -->
+	<%-include footer.html%>
+    </div>
+    <!-- jQuery -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!--stickup js-->
+    <script src="/bootstrap/dist/js/stickUp.min.js"></script>
+	<script type="text/javascript"> //initiating jQuery 
+	jQuery(function($) { $(document).ready( function() { 
+		//enabling stickUp on the '.navbar-wrapper' class 
+		$('#sendresumestick').stickUp(); }); 
+	}); 
+	</script>
+</body>
+</html>

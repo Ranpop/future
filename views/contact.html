@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<%
+var ifeditorexist = 0;
+var isloginpage = 0;
+%>
+<%- include header.html %>
+
+<body>
+    <!-- Navigation -->
+<%-include global-navbar.html%>
+
+    <div class="container">
+        <div class="row">
+            <!-- Blog Entries Column -->
+            <div class="col-md-8">
+                <h1 class="page-header">
+                    卡博:<br />
+                    <big>不让你联系，小样儿</big><br>
+                    <i>不让你联系，小样儿</i><br>
+                    <b>不让你联系，小样儿</b><br>
+                    <small>不让你联系，小样儿</small>
+                </h1>
+            </div>
+            <div class="col-md-4">
+            <%-include blogsidebar.html%>
+            </div>
+        </div>
+        <%-include footer.html%>
+    </div>
+
+    <!-- jQuery -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    </body>
+</html>

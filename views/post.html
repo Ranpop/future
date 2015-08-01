@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<%
+var ifeditorexist = 1;
+var isloginpage = 0;
+%>
+<%- include header.html %>
+
+<body>
+<%-include global-navbar.html%>
+
+    <!-- Page Content -->
+    <div class="container disend-2p5em">
+        <div class="row">
+        	<form class="col-md-8" method="post">
+        	标题:<br />
+        	<input type="text" name="title" /><br />
+        	标签:<br />
+        	<input type="text" name="tag1" /><br />
+        	简要描述:<br />
+        	<input type="text" name="brief" /><br />
+        	正文:<br />
+        	<textarea name="post" rows="20" cols="100" style="width:100%; height:350px;"></textarea><br />
+            <select name="qrcode" class="hidden">  
+            <option value ="yes">我为文章生成二维码</option>  
+            <option value ="no">不为文章生成二维码</option>  
+            </select>  
+        	<input type="submit" value="发表" />
+        	</form>
+            <div class="col-md-4">
+            <%-include blogsidebar.html%>
+            </div>
+        </div>
+    <%-include footer.html%>
+    </div>
+    <!-- jQuery -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

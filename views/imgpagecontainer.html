@@ -1,0 +1,60 @@
+
+
+            <!-- Blog Entries Column -->
+            <div class="col-md-8">
+
+                <h1 class="page-header">
+                    卡博
+                    <a class="nonunderline fontsize35p">让我们一起体验虚拟现实的精彩世界</a>
+                </h1>
+
+                <!-- First Blog Post -->
+                <% var count = 0 %>
+                <% posts.forEach(function(post, index) { %>
+                <% if(count >= 5) { %>
+                <% return; %>
+                <% } else { %>
+                <div>
+                <h2>
+                    <a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a>
+                </h2>
+                <p class="lead">
+                    by <a href="/u/<%= post.name %>"><%= post.name %></a>
+                </p>
+                <p><span class="glyphicon glyphicon-time"></span> 发表于 <%= post.time.minute %></p>
+                <hr>
+                <!--<iframe id="videoemb" src="http://player.youku.com/embed/XMjk3MTUyMzgw" frameborder=0 allowfullscreen></iframe>-->
+                <img class="img-responsive" src="http://www.mtyyw.com/wp-content/uploads/2009/07/kenny-rogers.jpg" alt="">
+                <hr>
+                <p><%= post.brief %></p>
+                <a class="btn btn-primary" href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">更多... <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <a class="R">阅读: <%= post.pv %> | 评论: <%= post.comments.length %></a>
+                <hr>
+            	</div>
+<!--
+                <p class="info">
+                    作者:<a href="/u/<%= post.name %>"><%= post.name %></a> |
+                    日期:<%= post.time.minute %>
+                    标签:
+                <% post.tags.forEach(function(tag, index){ %>
+                <% if(tag){ %>
+                <a class="tag" href="/blog/tags/<%= tag %>"><%= tag %></a>
+                <% } %>
+                <% }) %>
+                </p>
+                <p><%- post.post %></p>
+                <p class="info">阅读: <%= post.pv %> | 评论: <%= post.comments.length %></p>
+                <a class="btn btn-primary" href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">更多... <span class="glyphicon glyphicon-chevron-right"></span></a> -->
+                <% count = count + 1; %>
+                <% } %>
+                <% }) %>
+                <!-- Pager -->
+                <ul class="pager">
+                    <li class="previous">
+                        <a href="/l" name="one">&larr; 较早的</a>
+                    </li>
+                    <li class="next">
+                        <a href="/" name="two">较新的 &rarr;</a>
+                    </li>
+                </ul>
+            </div>

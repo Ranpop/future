@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<%
+var ifeditorexist = 1;
+var isloginpage = 0;
+%>
+<%- include header.html %>
+
+<body>
+    <!-- Page Content -->
+
+    <div class="container">
+		<hr>
+		<div class="text-center">
+			<span>Scan the qrcode , then share it to friend circle like the following steps...</span>
+			<img src="<%= qrcode %>">
+		</div>
+		<hr>
+        <img src="http://v.youku.com/v/img/wx_explain.png">
+        <hr>
+    <!-- Footer -->
+	<%-include footer.html%>
+    </div>
+    <!-- jQuery -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

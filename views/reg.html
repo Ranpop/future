@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%
+var ifeditorexist = 0;
+var isloginpage = 0;
+%>
+<%- include header.html %>
+
+<body>
+
+    <!-- Navigation -->
+<%-include global-navbar.html%>
+
+    <!-- Page Content -->
+    <div class="container disend-2p5em">
+        <div class="row">
+            <form class="loginform col-md-8" method="post">
+            	<label  for="txtname">用户名:</label>
+            	<input  type="text" name="name" /><br />
+            	<label  for="txtname">密码: </label>
+            	<input  type="password" name="password" /><br />
+            	<label  for="txtname">确认密码: </label>
+            	<input  type="password" name="password-repeat" /><br />
+            	<label  for="txtname">邮箱: </label>
+            	<input  type="email" name="email" /><br />
+            	<input class="btn" type="reset" />
+            	<input class="btn" type="submit" value="注册">
+            </form>
+            <div class="col-md-4">
+            <%-include blogsidebar.html%>
+            </div>
+        </div>
+        <!-- Footer -->
+<%-include footer.html%>
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
