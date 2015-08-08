@@ -1,55 +1,73 @@
-
-/**
- * Module dependencies.
- */
-
 var express = require('express');
-var routes = require('./routes');
-var http = require('http');
 var path = require('path');
-var MongoStore = require('connect-mongo')(express);
+var session    = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 var settings = require('./settings');
 var flash = require('connect-flash');
-var ejs = require('ejs');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 
+var routes = require('./routes/index');
+var users = require('./routes/users');
+var ejs = require('ejs');
 var app = express();
 
-// all environments
-app.set('port', process.env.PORT || 80);
+// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'ejs');
 app.engine('.html', ejs.__express);
 app.set('view engine', 'html');
 app.use(flash());
-app.use(express.favicon(__dirname + '/public/bootstrap/images/favicon.ico'));
-app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.methodOverride());
-app.use(express.bodyParser({keepExtensions:true, uploadDir:'./public/images'}));
-app.use(express.cookieParser());
-app.use(express.session({
-	secret: settings.cookiesSecret,
-	key: settings.db,
-	cookie: {maxAge: 1000*60*60*24*30},
-	store: new MongoStore({
-		db: settings.db
-	})
+
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, '/public/bootstrap/images/favicon.ico')));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(session({
+  secret:settings.cookieSecret,
+  key:settings.db,
+  cookie:{maxAge:1000*60*60*24*30},
+  store:new MongoStore({db:settings.db})
 }));
-app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+app.use('/', routes);
+app.use('/users', users);
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
+  });
 }
 
-//app.get('/', routes.index);
-//app.get('/users', user.list);
-routes(app);
-
-http.createServer(app).listen(app.get('port'), function(){
-	console.log('Express server listening on port ' + app.get('port'));
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
 });
 
 
+module.exports = app;

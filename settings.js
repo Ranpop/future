@@ -1,5 +1,5 @@
 module.exports = {
-	cookiesSecret: 'myblog',
-	db: 'blog',
+	cookieSecret: 'futureserver',
+	db: 'dbfuture',
 	host: 'localhost'
 };
