@@ -21,22 +21,6 @@ function ShareToWB(url,calback){
 					});
 }
 
-/*
-function GenSURL(name,time,title,sharerid,callback){
-	var urlbase = 'http://www.smartcreate.net/sharegetreq/';
-	var url = encodeURI(urlbase + name + '/' + time + '/' + title + '/' + sharerid);
-	console.log(url);
-
-	callback(url);
-}
-function GenSendResumeURL(name,time,title,sharerid,callback){
-	var urlqrbase = 'http://www.smartcreate.net/sendresumereq/';
-	var urlqr = encodeURI(urlqrbase + namename + '/' + time + '/' + title + '/' + sharerid);
-	console.log(urlqr);
-
-	callback(urlqr);
-}
-*/
 function ShareToOtherPlatform(url, name, time, title, sharerid, sid, callback){
 	var sharedurl;
 	console.log(url);
@@ -61,33 +45,24 @@ function ShareToOtherPlatform(url, name, time, title, sharerid, sid, callback){
 	}
 	callback(1,sharedurl);
 }
+
+
 function GetSharedArticle(url, name, time, title, sharerid, callback){
 	//get post
 	var err;
 	var urlshare = 'http://www.smartcreate.net/sendresumereq' + '/' + name + '/' + time + '/' + title + '/' + sharerid;
 	console.log(urlshare);
+	console.log(name);
+	console.log(time);
+	console.log(title);
 	Post.getOne(name,time,title,function(err,doc){
-			if(err){
-				return callback(err);
-			}
-			Qrcode.toDataURL(urlshare, function(err,qrcodeimg){
-						callback(err,doc,sharerid,qrcodeimg);
-			});
-			//get user with uid
-			//User.get(sharerid,function(err,sharer){
-			//	if(err){
-			//		return callback(err);
-			//	}
-				//gen qrcode img
-			//	Qrcode.toDataURL(urlshare, function(err,qrcodeimg){
-			//			callback(err,doc,sharerid,qrcodeimg);
-			//	});
-				//GenSendResumeURL(name,time,title,sharerid,function(url){
-				//	Qrcode.toDataURL(url, function(err,qrcodeimg){
-				//		callback(err,doc,sharerid,qrcodeimg);
-				//	});
-				//});
-			//});
+		if(err){
+			console.log('get failed')
+			return callback(err);
+		}
+		Qrcode.toDataURL(urlshare, function(err,qrcodeimg){
+			callback(err,doc,sharerid,qrcodeimg);
+		});
 	});
 
 	

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%
+var ifeditorexist = 0;
+var isloginpage = 0;
+%>
+<%- include header.html %>
+
+<body>
+
+    <!-- Navigation -->
+<%-include global-navbar.html%>
+
+    <!-- Page Content -->
+    <div class="container disend-2p5em">
+        <div class="row">
+            <form class="loginform col-md-8" method="post">
+                <% if (user) { %>
+            	<label for="txtname">手机号:</label>
+            	<input type="text" name="name" value="<%= user.name %>" /><br />
+                <% } else { %>
+                <label for="txtname">手机号:</label>
+                <input type="text" name="name"/><br />
+                <% } %>
+            	<label for="txtname">验证码: </label>
+                <input type="text" name="authcode"/><br />
+                <input type="text" name="paramsname" value="<%= paramsname %>" style=" display:none;"/><br /> 
+                <input type="text" name="paramstime" value="<%= paramstime %>" style="display:none;"/><br />
+                <input type="text" name="paramstitle" value="<%= paramstitle %>" style="display:none;"/><br />
+                <input type="text" name="paramssharedid" value="<%= paramssharedid %>" style="display:none;"/><br />
+                <input class="btn" type="submit" name="authbtn" value="获取验证码" />
+            	<input class="btn" type="submit" name="login" value="登录" /><br>
+                <% if (authcode != "") {%>
+                <b>验证码为: <%= authcode %></b><br>
+                <% } %>
+            </form>
+            <div class="col-md-4">
+            <%-include blogsidebar.html%>
+            </div>
+        </div>
+        <!-- Footer -->
+<%-include footer.html%>
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

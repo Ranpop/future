@@ -5,6 +5,7 @@ function User(user){
 	this.name = user.name;
 	this.password = user.password;
 	this.email = user.email;
+	this.authcode = user.authcode;
 };
 
 module.exports = User;
@@ -15,7 +16,8 @@ User.prototype.save = function(callback){
 	var user = {
 		name: this.name,
 		password: this.password,
-		email: this.email
+		email: this.email,
+		authcode: this.authcode
 	};
 	//打开数据库
 	mongodb.open(function(err, db){

@@ -198,6 +198,7 @@ Post.getOne = function(name, day, title, callback){
 		}
 		db.collection('post', function(err, collection){//is post not posts
 			if(err){
+				console.log('1');
 				mongodb.close();
 				return callback(err);
 			}
@@ -210,6 +211,7 @@ Post.getOne = function(name, day, title, callback){
 				"title": title
 			}, function(err, doc){
 				if(err){
+					console.log('2');
 					mongodb.close();
 					return callback(err);
 				}
@@ -225,6 +227,7 @@ Post.getOne = function(name, day, title, callback){
 					}, function(err){
 						mongodb.close();
 						if(err){
+							console.log('3');
 							return callback(err);
 						}
 					});

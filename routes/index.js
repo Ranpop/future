@@ -21,8 +21,8 @@ var config = {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	//console.log(req.url);
-	//console.log(req.method);
+	console.log(req.url);
+	console.log(req.method);
 	Post.getAll(null, function(err, posts){
 		if(err){
 			posts = [];
@@ -169,9 +169,10 @@ router.post('/reg', function(req, res){
 	var newUser = new User({
 		name: req.body.name,
 		password: password,
-		email: req.body.email
+		email: req.body.email,
+		authcode: ""
 	});
-		//检查用户名是否存在
+	//检查用户名是否存在
 	User.get(newUser.name, function(err, user){
 		if(user){
 			req.flash('error', '用户已经存在!');
@@ -462,12 +463,8 @@ router.get('/remove/:name/:day/:title', function(req, res){
 	}
 });
 
-router.use(function(req, res){
-	res.render("404");
-});
-
 router.get('/qrcode', function(req, res){
-	//console.log(req.url);
+	console.log(req.url);
 	//console.log(req.method);
 	Qrcode.toDataURL('https://www.baidu.com/',function(err,url){
 		console.log(url);
@@ -480,30 +477,6 @@ router.get('/qrcode', function(req, res){
 	});
 	//res.send('success');
 });
-
-/*
-	var menu = {
-		"button":[
-		{
-			"type":"click",
-			"name":"今日歌曲",
-			"key":"V1001_TODAY_MUSIC"
-		},
-		{
-     		"name":"菜单",
-     		"sub_button":[
-       		{
-         		"type":"view",
-         		"name":"搜索",
-         		"url":"http://www.soso.com/"
-       		},
-       		{
-         		"type":"click",
-         		"name":"赞一下我们",
-         		"key":"V1001_GOOD"
-       		}]
-    	}]
-	};*/
 
 router.post('/wechat', Wechat(config, function (req, res, next) {
 	// 微信输入信息都在req.weixin上
@@ -558,9 +531,10 @@ router.post('/wechat', Wechat(config, function (req, res, next) {
 	//shareset handler
 router.get('/share/:name/:time/:title/:sharerid/:sid', checkLogin);
 router.get('/share/:name/:time/:title/:sharerid/:sid', function(req, res){
+	console.log(req.url);
 	var share = new Share();
 	//console.log('derek mark index js');
-	//console.log(req.url);
+	console.log(req.url);
 	share.setShare(req.url, req.params.name,req.params.time,req.params.title,req.params.sharerid,req.params.sid,function(err,sharedurlqrcode){
 		if(err){
 			console.log('share fail...');
@@ -579,44 +553,157 @@ router.get('/share/:name/:time/:title/:sharerid/:sid', function(req, res){
 
 //shareget handler
 router.get('/share/:name/:time/:title/:sharerid', function(req, res){
-	var share = new Share();
-	//console.log('sharegetreq derek mark index js');
-	//console.log(req.url);
-	share.getShare(req.url ,req.params.name,req.params.time,req.params.title,req.params.sharerid,function(err,post,sharer,qrcode){
-		if(err){
-			console.log('share fail...');
-			res.redirect('https://www.baidu.com/search/error.html');
-			return;
-		}
-		//get ok
-		res.render('sharedjob',{
-			sharer: sharer,
-			post: post,
-			qrcode: qrcode,
+	if (!req.session.user){
+		//register with user's phone number
+		console.log(req.params.name);
+		console.log(req.params.time);
+		console.log(req.params.title);
+		console.log(req.params.sharerid);
+		res.render('wexplatformregister', {
+			title: '注册',
+			user: req.session.user,
+			authcode: "",
+			paramsname: req.params.name,
+			paramstime: req.params.time,
+			paramstitle: req.params.title,
+			paramssharedid: req.params.sharerid,
 			success: req.flash('success').toString(),
 			error: req.flash('error').toString()
-		});	
-	});
+		});
+	}
+	else{
+		var share = new Share();
+		//console.log('sharegetreq derek mark index js');
+		//console.log(req.url);
+		share.getShare(req.url ,req.params.name,req.params.time,req.params.title,req.params.sharerid,function(err,post,sharer,qrcode){
+			if(err){
+				console.log('share fail...');
+				res.redirect('https://www.baidu.com/search/error.html');
+				return;
+			}
+			//get ok
+			res.render('sharedjob',{
+				sharer: sharer,
+				post: post,
+				qrcode: qrcode,
+				success: req.flash('success').toString(),
+				error: req.flash('error').toString()
+			});	
+		});
+	}
 });	
+
+router.post('/share/:name/:time/:title/:sharerid', function(req, res){
+	if (req.body.authbtn){
+		console.log(req.body.authbtn);
+		var authcode="";
+		for (var i=0; i<6; i++){
+			var id = Math.round(Math.random()*10);
+         	authcode += id;
+		}
+		console.log(authcode);
+		var newUser = new User({
+			name: req.body.name,
+			password: "",
+			email: "",
+			authcode: authcode
+		});
+
+		User.get(newUser.name, function(err, user){
+			if(user){
+				req.flash('error', '用户已经存在!');
+				//return res.redirect('/reg');//返回注册页
+			}
+			//如果用户不存在则新增用户
+			newUser.save(function(err, user){
+				if(err){
+					req.flash('error', 'err');
+					//return res.redirect('/reg');  
+				}
+				//req.session.user = user;//用户信息存入session
+				//req.flash('success', '注册成功');
+				console.log("open save number ok");
+			});
+		});
+
+		console.log(req.body.paramsname);
+		console.log(req.body.paramstime);
+		console.log(req.body.paramstitle);
+		console.log(req.body.paramssharedid);
+
+		res.render('wexplatformregister', {
+			title: '注册',
+			user: newUser,
+			authcode: authcode,
+			paramsname: req.body.paramsname,
+			paramstime: req.body.paramstime,
+			paramstitle: req.body.paramstitle,
+			paramssharedid: req.body.paramssharedid,
+			success: req.flash('success').toString(),
+			error: req.flash('error').toString()
+		});
+	}
+	else if (req.body.login){
+		console.log(req.body.login);
+
+	    var authcode = req.body.authcode;
+		User.get(req.body.name, function(err, user){
+			if(!user){
+				req.flash('error', '用户名不存在');
+				return res.redirect(req.url);
+			}
+		
+			if(user.authcode != authcode){
+				req.flash('error', '验证码错误');
+				return res.redirect(req.url);
+			}
+			//用户名密码都匹配后，将用户信息存入session
+			req.session.user = user;
+			req.flash('success', '登陆成功');
+		});
+
+		console.log(req.body.paramsname);
+		console.log(req.body.paramstime);
+		console.log(req.body.paramstitle);
+		console.log(req.body.paramssharedid);
+		var share = new Share();
+		share.getShare(req.url ,req.body.paramsname,req.body.paramstime,req.body.paramstitle,req.body.paramssharedid,function(err,post,sharer,qrcode){
+			if(err){
+				console.log('share fail...');
+				res.redirect('https://www.baidu.com/search/error.html');
+				return;
+			}
+			//get ok
+			res.render('sharedjob',{
+				sharer: sharer,
+				post: post,
+				qrcode: qrcode,
+				success: req.flash('success').toString(),
+				error: req.flash('error').toString()
+			});	
+		});
+	}
+});
 
 //sendresume handler
 router.get('/sendresumereq/:name/:time/:title/:sharerid', function(req, res){
 	//console.log('sharegetreq derek mark index js');
 	//console.log(req.url);
-	Post.getOne(req.params.name, req.params.time, req.params.title, function(err, post){
-		if(err){
-			console.log('share fail...');
-			res.redirect('https://www.baidu.com/search/error.html');
-			return;
-		}
 
-		res.render('sendresume',{
-			sharer: req.params.sharerid,
-			post: post,
-			success: req.flash('success').toString(),
-			error: req.flash('error').toString()
-		});	
-	});
+		Post.getOne(req.params.name, req.params.time, req.params.title, function(err, post){
+			if(err){
+				console.log('share fail...');
+				res.redirect('https://www.baidu.com/search/error.html');
+				return;
+			}
+
+			res.render('sendresume',{
+				sharer: req.params.sharerid,
+				post: post,
+				success: req.flash('success').toString(),
+				error: req.flash('error').toString()
+			});	
+		});
 });	
 
 function checkLogin(req, res, next){
