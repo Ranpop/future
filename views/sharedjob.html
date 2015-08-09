@@ -29,14 +29,14 @@
     	<ul id="sendresumestick" class="list-inline navbar-static-top">
 			<li>
 				<% if (user) { %>
-				<a class="btn btn-primary btn-lg" href="#" role="button" style="background-color:rgba(255,0,0,0.5)">分享给身边的好友</a>
+				<a class="btn btn-primary btn-lg" href="javascript:WeiXinShareBtn();" role="button" style="background-color:rgba(255,0,0,0.5)">分享给身边的好友</a>
 				<% } else { %>
 				<a class="btn btn-primary btn-lg" href="/notreg/share/<%= post.name %>/:time/<%= post.title %>/<%= sharer%>" role="button" style="background-color:rgba(255,0,0,0.5)">分享给身边的好友</a>
 				<% } %>
 			</li>
 			<li>
 				<% if (user) { %>
-				<a class="btn btn-primary btn-lg" href="/sendresumesimple/<%= post.name %>/:time/<%= post.title %>/<%= sharer%>" role="button" style="background-color:rgba(255,0,0,0.5)">自己投简历</a>
+				<a class="btn btn-primary btn-lg" href="/sendresumesimple/<%= post.name %>/:time/<%= post.title %>/<%= sharer%>" role="button" style="background-color:rgba(0,255,0,0.5)">自己投简历</a>
 				<% } else { %>
 				<a class="btn btn-primary btn-lg" href="/notreg/share/<%= post.name %>/:time/<%= post.title %>/<%= sharer%>" role="button" style="background-color:rgba(0,255,0,0.5)">自己投简历</a>
 				<% } %>
@@ -62,5 +62,19 @@
 		$('#sendresumestick').stickUp(); }); 
 	}); 
 	</script>
+	<script>
+	function WeiXinShareBtn() { 
+	 if (typeof WeixinJSBridge == "undefined") { 
+	 alert("please add our public no ranpop,you must share it in the weichat browser"); 
+	 } else { 
+	 WeixinJSBridge.invoke('shareTimeline', { 
+	 "title": "future", 
+	 "link": "http://smartcreate.net", 
+	 "desc": "关注互联网创业", 
+	 "img_url": "http://www.36kr.com/assets/images/apple-touch-icon.png" 
+	 }); 
+	 } 
+	 }
+ </script>
 </body>
 </html>
