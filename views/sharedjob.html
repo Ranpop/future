@@ -25,59 +25,21 @@
     	<div class="divtitle ">
     		<a><%= post.title %></a>
     	</div>
-		<!-- Modal -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">请扫描二维码直接投递简历！</h4>
-		      </div>
-		      <div class="modal-body">
-				<div class="text-center">
-					<img src="<%= qrcode %>">
-				</div>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-		<!-- Modal2 -->
-		<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">上传一份本地已经编辑好的简历：</h4>
-		      </div>
-		      <div class="modal-body">
-				<div class="text-center">
-					<form method='post' action='/upload' enctype='multipart/form-data'>
-						<input type="file" name='file1' />
-						<input type="submit" value="提交"/>
-					</form>
-					<hr>
-					<a href="/sendresumereq/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>">还没有简历？来填写一份吧！</a>
-				</div>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
+
     	<ul id="sendresumestick" class="list-inline navbar-static-top">
 			<li>
-				<button type="button" class="btn btn-primary btn-lg" style="background-color:rgba(255,0,0,0.5)" data-toggle="modal" data-target="#myModal">
-  					分享给身边的好友
-				</button>
+				<% if (user) { %>
+				<a class="btn btn-primary btn-lg" href="#" role="button" style="background-color:rgba(255,0,0,0.5)">分享给身边的好友</a>
+				<% } else { %>
+				<a class="btn btn-primary btn-lg" href="/notreg/share/<%= post.name %>/:time/<%= post.title %>/<%= sharer%>" role="button" style="background-color:rgba(255,0,0,0.5)">分享给身边的好友</a>
+				<% } %>
 			</li>
 			<li>
-				<button type="button" class="btn btn-primary btn-lg" style="background-color:rgba(0,255,0,0.5)" data-toggle="modal" data-target="#myModal2">
-  					自己投简历
-				</button>
+				<% if (user) { %>
+				<a class="btn btn-primary btn-lg" href="/sendresumesimple/<%= post.name %>/:time/<%= post.title %>/<%= sharer%>" role="button" style="background-color:rgba(255,0,0,0.5)">自己投简历</a>
+				<% } else { %>
+				<a class="btn btn-primary btn-lg" href="/notreg/share/<%= post.name %>/:time/<%= post.title %>/<%= sharer%>" role="button" style="background-color:rgba(0,255,0,0.5)">自己投简历</a>
+				<% } %>
 			</li>
     	</ul>
 		<hr>

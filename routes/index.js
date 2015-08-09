@@ -551,8 +551,25 @@ router.get('/share/:name/:time/:title/:sharerid/:sid', function(req, res){
 	});
 });	
 
-//shareget handler
-router.get('/share/:name/:time/:title/:sharerid', function(req, res){
+router.get('/sendresumesimple/:name/:time/:title/:sharerid', function(req, res){
+		//register with user's phone number
+		console.log(req.params.name);
+		console.log(req.params.time);
+		console.log(req.params.title);
+		console.log(req.params.sharerid);
+		res.render('sendresumesimple', {
+			title: 'sendresumesimple',
+			user: req.session.user,
+			paramsname: req.params.name,
+			paramstime: req.params.time,
+			paramstitle: req.params.title,
+			paramssharedid: req.params.sharerid,
+			success: req.flash('success').toString(),
+			error: req.flash('error').toString()
+		});
+	});
+
+router.get('/notreg/share/:name/:time/:title/:sharerid', function(req, res){
 	if (!req.session.user){
 		//register with user's phone number
 		console.log(req.params.name);
@@ -570,8 +587,10 @@ router.get('/share/:name/:time/:title/:sharerid', function(req, res){
 			success: req.flash('success').toString(),
 			error: req.flash('error').toString()
 		});
-	}
-	else{
+	}});
+
+//shareget handler
+router.get('/share/:name/:time/:title/:sharerid', function(req, res){
 		var share = new Share();
 		//console.log('sharegetreq derek mark index js');
 		//console.log(req.url);
@@ -583,6 +602,7 @@ router.get('/share/:name/:time/:title/:sharerid', function(req, res){
 			}
 			//get ok
 			res.render('sharedjob',{
+				user: req.session.user,
 				sharer: sharer,
 				post: post,
 				qrcode: qrcode,
@@ -590,7 +610,6 @@ router.get('/share/:name/:time/:title/:sharerid', function(req, res){
 				error: req.flash('error').toString()
 			});	
 		});
-	}
 });	
 
 router.post('/share/:name/:time/:title/:sharerid', function(req, res){
