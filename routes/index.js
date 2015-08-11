@@ -551,7 +551,7 @@ router.get('/share/:name/:time/:title/:sharerid/:sid', function(req, res){
 	});
 });	
 
-router.get('/sendresumesimple/:name/:time/:title/:sharerid', function(req, res){
+router.get('/sendresumesimple/:name/:time/:title/:sharerid/:userid', function(req, res){
 		//register with user's phone number
 		console.log(req.params.name);
 		console.log(req.params.time);

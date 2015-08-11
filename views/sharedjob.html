@@ -20,6 +20,35 @@
 
 
 <body>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">use your phone to authenticate</h4>
+	      </div>
+	      <div class="modal-body">
+	        <form class="col-md-12">
+	          <div class="form-group">
+	            <label for="phonenumber">phonenumber</label>
+	            <input type="text" class="form-control" id="phonenumber" placeholder="you phone number">
+	          </div>
+	          <div class="form-group">
+	            <label for="confirmno">Confirm No.</label>
+	            <input type="text" class="form-control" id="confirmno" placeholder="input the auth code you received">
+	          </div>
+	          <div>authcode is:<a id="authcodedis"></a></div>
+	          <a class="btn btn-default" href="javascript:getauthcodejs();" role="button">getAuthCode</a>
+	          <a class="btn btn-default" href="javascript:confirmauthcodejs();" role="button">Confirm</a>
+	        </form>	        
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
     <!-- Page Content -->
     <div class="container">
     	<div class="divtitle ">
@@ -31,14 +60,14 @@
 				<% if (user) { %>
 				<a class="btn btn-primary btn-lg" href="javascript:WeiXinShareBtn();" role="button" style="background-color:rgba(255,0,0,0.5)">分享给身边的好友</a>
 				<% } else { %>
-				<a class="btn btn-primary btn-lg" href="/notreg/share/<%= post.name %>/:time/<%= post.title %>/<%= sharer%>" role="button" style="background-color:rgba(255,0,0,0.5)">分享给身边的好友</a>
+				<a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-whatever="share" role="button" style="background-color:rgba(255,0,0,0.5)">分享给身边的好友</a>
 				<% } %>
 			</li>
 			<li>
 				<% if (user) { %>
-				<a class="btn btn-primary btn-lg" href="/sendresumesimple/<%= post.name %>/:time/<%= post.title %>/<%= sharer%>" role="button" style="background-color:rgba(0,255,0,0.5)">自己投简历</a>
+				<a class="btn btn-primary btn-lg" href="/sendresumesimple/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>/<%= user%>" role="button" style="background-color:rgba(0,255,0,0.5)">自己投简历</a>
 				<% } else { %>
-				<a class="btn btn-primary btn-lg" href="/notreg/share/<%= post.name %>/:time/<%= post.title %>/<%= sharer%>" role="button" style="background-color:rgba(0,255,0,0.5)">自己投简历</a>
+				<a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-whatever="send" role="button" style="background-color:rgba(0,255,0,0.5)">自己投简历</a>
 				<% } %>
 			</li>
     	</ul>
@@ -56,6 +85,10 @@
     <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
     <!--stickup js-->
     <script src="/bootstrap/dist/js/stickUp.min.js"></script>
+    <!-- Socket io JavaScript -->
+    <script src="/bootstrap/dist/js/socket.io.js"></script>
+    <!-- AuthCodeGen websocket JavaScript -->
+    <script src="/bootstrap/dist/js/authcode-ws-client.js"></script>  
 	<script type="text/javascript"> //initiating jQuery 
 	jQuery(function($) { $(document).ready( function() { 
 		//enabling stickUp on the '.navbar-wrapper' class 
@@ -75,6 +108,18 @@
 	 }); 
 	 } 
 	 }
+
+	$('#myModal').on('show.bs.modal', function (event) {
+	  var button = $(event.relatedTarget) // Button that triggered the modal
+	  shareorsend = button.data('whatever') // Extract info from data-* attributes
+
+	  console.log('myModal : ' + shareorsend);
+	})
+
+	function getsendresumesimply(){
+		console.log('/sendresumesimple/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>/<%= user%>' + userid);
+		window.location.href = '/sendresumesimple/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>/<%= user%>' + userid;
+	}
  </script>
 </body>
 </html>
