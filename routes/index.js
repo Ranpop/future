@@ -569,6 +569,16 @@ router.get('/sendresumesimple/:name/:time/:title/:sharerid/:userid', function(re
 		});
 	});
 
+router.post('/sendresumesimple/:name/:time/:title/:sharerid/:userid', function(req, res){
+	console.log("save new resume");
+	console.log(req);
+	//todo
+		res.render('success',{
+		success: req.flash('success').toString(),
+		error: req.flash('error').toString()
+		});	
+});
+
 router.get('/notreg/share/:name/:time/:title/:sharerid', function(req, res){
 	if (!req.session.user){
 		//register with user's phone number
