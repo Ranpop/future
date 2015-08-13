@@ -18,6 +18,7 @@
     "connect-mongo":"*",
     "connect-flash": "*",
     "markdown": "*",
-    "formidable": "latest"
+    "formidable": "latest",
+    "socket.io":"*"
   }
 }
