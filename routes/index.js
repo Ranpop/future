@@ -601,10 +601,12 @@ router.post('/share/:name/:time/:title/:sharerid', function(req, res){
 			var id = Math.round(Math.random()*10);
          	authcode += id;
 		}
+		var md5 = crypto.createHash('md5'),
+			password = md5.update('123456').digest('hex');
 		console.log(authcode);
 		var newUser = new User({
 			name: req.body.name,
-			password: "",
+			password: password,
 			email: "",
 			authcode: authcode
 		});
@@ -659,7 +661,7 @@ router.post('/share/:name/:time/:title/:sharerid', function(req, res){
 			}
 			//用户名密码都匹配后，将用户信息存入session
 			req.session.user = user;
-			req.flash('success', '登陆成功');
+			//req.flash('success', '登陆成功');
 		});
 
 		console.log(req.body.paramsname);
