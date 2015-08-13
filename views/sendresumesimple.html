@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%
+var ifeditorexist = 0;
+var isloginpage = 0;
+%>
+<%- include header.html %>
+
+<body>
+
+    <!-- Navigation -->
+<%-include global-navbar.html%>
+
+    <!-- Page Content -->
+    <div class="container disend-2p5em">
+
+        <div class="row">
+        <form method="post">
+          <div class="form-group">
+            <label for="interviewername">name</label>
+            <input type="text" name="interviewername" class="form-control" id="interviewername" placeholder="your full name">
+          </div>
+          <div class="form-group">
+            <label for="interviewerage">age</label>
+            <input type="text" name="interviewerage" class="form-control" id="interviewerage" placeholder="your age">
+          </div>
+          <div class="form-group">
+            <label for="interviewerplace">workplace</label>
+            <input type="text" name="interviewerplace" class="form-control" id="interviewerplace" placeholder="where are you working now?">
+          </div>
+          <div class="form-group">
+            <label for="interviewergoodin">goodin</label>
+            <input type="text" name="interviewergoodin" class="form-control" id="interviewergoodin" placeholder="what are you good in?">
+          </div>
+          <div class="form-group">
+            <label for="interviewerworkingyears">working years</label>
+            <input type="text" name="interviewerworkingyears" class="form-control" id="interviewergoodin" placeholder="how many years are you working in your major?">
+          </div>
+          <input type="reset" class="btn btn-default" name="reset" value="重置" />
+          <input type="submit" class="btn btn-default" name="submit" value="提交">
+        </form>
+        </div>
+        <!-- Footer -->
+<%-include footer.html%>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
