@@ -7,13 +7,14 @@ console.log('server: ' + chat_server);
 var socket = io.connect(chat_server);
 
 var shareorsend = 'share';
-var userid = 0;
-socket.on('respauthcode', function (_authcode) {
+var user_phoneno = 0;
+socket.on('getauthcode_resp', function (_authcode) {
 	console.log('respauthcode: ' + _authcode);
 	$("#authcodedis").html(_authcode); 
 });
 
-socket.on('respconfirmed', function (_respcode) {
+socket.on('confirmauthcode_resp', function (_respcode) {
+	console.log('respconfirmed: ' + shareorsend);
 	if(shareorsend == 'share'){
 		$("#authcodedis").html("confirm ok!!! share"); 
 		WeiXinShareBtn();
@@ -27,10 +28,25 @@ socket.on('respconfirmed', function (_respcode) {
 	}
 });
 
+socket.on('addnewshare_resp', function (_authcode) {
+	console.log('respauthcode: ' + _authcode);
+	$("#authcodedis").html(_authcode); 
+});
+
 function getauthcodejs() {
-	userid = document.getElementById("phonenumber").value;
-    socket.emit('getauthcode', document.getElementById("phonenumber").value);
+	user_phoneno = document.getElementById("phonenumber").value;
+    socket.emit('getauthcode_req', document.getElementById("phonenumber").value);
 }
+
 function confirmauthcodejs() {
-    socket.emit('confirmauthcode', document.getElementById("confirmno").value);
+    socket.emit('confirmauthcode_req', document.getElementById("confirmno").value);
+}
+
+function addnewsharerjs(newsharer,presharer,postname,posttime,posttitle) {
+	console.log('informthenewsharer: ' + newsharer + ':' + presharer);
+    socket.emit('addnewshare_req',  {'newsharerid':newsharer,
+    								'presharerid':presharer,
+    								'post':{'name':postname,
+    										'time':posttime,
+    										'title':posttitle}});
 }

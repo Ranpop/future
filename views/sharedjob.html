@@ -93,33 +93,34 @@
 	jQuery(function($) { $(document).ready( function() { 
 		//enabling stickUp on the '.navbar-wrapper' class 
 		$('#sendresumestick').stickUp(); }); 
-	}); 
-	</script>
-	<script>
-	function WeiXinShareBtn() { 
-	 if (typeof WeixinJSBridge == "undefined") { 
-	 alert("please add our public no ranpop,you must share it in the weichat browser"); 
-	 } else { 
-	 WeixinJSBridge.invoke('shareTimeline', { 
-	 "title": "future", 
-	 "link": "http://smartcreate.net", 
-	 "desc": "关注互联网创业", 
-	 "img_url": "http://www.36kr.com/assets/images/apple-touch-icon.png" 
-	 }); 
-	 } 
-	 }
-
+	});
 	$('#myModal').on('show.bs.modal', function (event) {
 	  var button = $(event.relatedTarget) // Button that triggered the modal
 	  shareorsend = button.data('whatever') // Extract info from data-* attributes
 
 	  console.log('myModal : ' + shareorsend);
-	})
-
+	});
+	function WeiXinShareBtn() { 
+	 if (typeof WeixinJSBridge == "undefined") { 
+	 		alert("please add our public no ranpop,you must share it in the weichat browserrrrrrrrrr"); 
+			 //to do inform the system the new sharer
+			 <% if (user) { %>
+			 	user_phoneno = '<%= user%>';
+			 <% } %>
+			 addnewsharerjs(user_phoneno,'<%= sharer%>','<%= post.name %>','<%= post.time.day %>','<%= post.title %>');
+	 } else { 
+			 WeixinJSBridge.invoke('shareTimeline', { 
+			 "title": "future", 
+			 "link": "http://smartcreate.net", 
+			 "desc": "关注互联网创业", 
+			 "img_url": "http://www.36kr.com/assets/images/apple-touch-icon.png" 
+			 }); 
+	 } 
+	 }
 	function getsendresumesimply(){
-		console.log('/sendresumesimple/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>/<%= user%>' + userid);
-		window.location.href = '/sendresumesimple/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>/<%= user%>' + userid;
+		console.log('/sendresumesimple/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>/<%= user%>' + user_phoneno);
+		window.location.href = '/sendresumesimple/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>/<%= user%>' + user_phoneno;
 	}
- </script>
+	</script>
 </body>
 </html>
