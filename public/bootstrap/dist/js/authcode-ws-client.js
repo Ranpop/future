@@ -2,7 +2,7 @@
  * Created by coofly on 2014/7/12.
  */
 
-var chat_server = 'http://' + location.hostname + ':8080';
+var chat_server = 'http://' + location.hostname + ':3000';
 console.log('server: ' + chat_server);
 var socket = io.connect(chat_server);
 
