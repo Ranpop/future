@@ -103,11 +103,6 @@
 	function WeiXinShareBtn() { 
 	 if (typeof WeixinJSBridge == "undefined") { 
 	 		alert("please add our public no ranpop,you must share it in the weichat browserrrrrrrrrr"); 
-			 //to do inform the system the new sharer
-			 <% if (user) { %>
-			 	user_phoneno = '<%= user%>';
-			 <% } %>
-			 addnewsharerjs(user_phoneno,'<%= sharer%>','<%= post.name %>','<%= post.time.day %>','<%= post.title %>');
 	 } else { 
 			 WeixinJSBridge.invoke('shareTimeline', { 
 			 "title": "future", 
@@ -115,6 +110,11 @@
 			 "desc": "关注互联网创业", 
 			 "img_url": "http://www.36kr.com/assets/images/apple-touch-icon.png" 
 			 }); 
+			 //to do inform the system the new sharer
+			 <% if (user) { %>
+			 	user_phoneno = '<%= user%>';
+			 <% } %>
+			 addnewsharerjs(user_phoneno,'<%= sharer%>','<%= post.name %>','<%= post.time.day %>','<%= post.title %>');
 	 } 
 	 }
 	function getsendresumesimply(){
