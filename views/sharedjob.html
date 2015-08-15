@@ -89,6 +89,9 @@
     <script src="/bootstrap/dist/js/socket.io.js"></script>
     <!-- AuthCodeGen websocket JavaScript -->
     <script src="/bootstrap/dist/js/authcode-ws-client.js"></script>  
+    <!-- weixin js sdk -->
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
 	<script type="text/javascript"> //initiating jQuery 
 	jQuery(function($) { $(document).ready( function() { 
 		//enabling stickUp on the '.navbar-wrapper' class 
@@ -100,10 +103,12 @@
 
 	  console.log('myModal : ' + shareorsend);
 	});
+
 	function WeiXinShareBtn() { 
 	 if (typeof WeixinJSBridge == "undefined") { 
 	 		alert("please add our public no ranpop,you must share it in the weichat browserrrrrrrrrr"); 
 	 } else { 
+	 	alert("dddddddd"); 
 			 WeixinJSBridge.invoke('shareTimeline', { 
 			 "title": "future", 
 			 "link": "http://smartcreate.net", 
