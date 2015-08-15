@@ -736,6 +736,14 @@ router.get('/sendresumereq/:name/:time/:title/:sharerid', function(req, res){
 		});
 });	
 
+//test wxapi
+router.get('/testwxapi', function(req, res){
+			res.render('testwxapi',{
+				success: req.flash('success').toString(),
+				error: req.flash('error').toString()
+			});	
+});	
+
 function checkLogin(req, res, next){
 	if(!req.session.user){
 		req.flash('error', '未登录！');
