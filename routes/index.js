@@ -12,12 +12,16 @@ var formidable = require('formidable');
 var Qrcode = require('qrcode');
 var Wechat = require('wechat');
 var API = require('wechat-api');
+var wehatsigserver = require('../models/wehatsigserver');
 var api = new API('wx52c2d4b50da7ed77', '230cd9497f43cbebe9cbdc7031230e90');
 var config = {
   token: 'ranpopwechat',
   appid: 'wx52c2d4b50da7ed77',
   encodingAESKey: 'xeeeR6HqdU0rNNbYwzfh9OgPJeRA9Kmv6hEnu5G83sI'
 };
+
+//init wechat signature server
+wehatsigserver(express);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
