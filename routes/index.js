@@ -535,7 +535,7 @@ router.get('/share/:name/:time/:title/:sharerid/:sid', function(req, res){
 	var share = new Share();
 	//console.log('derek mark index js');
 	console.log(req.url);
-	share.setShare(req.url, req.params.name,req.params.time,req.params.title,req.params.sharerid,req.params.sid,function(err,sharedurlqrcode){
+	share.setShare(req.url, req.params.sid,function(err,sharedurlqrcode){
 		if(err){
 			console.log('share fail...');
 			res.redirect('https://www.baidu.com/search/error.html');
@@ -604,7 +604,7 @@ router.get('/share/:name/:time/:title/:sharerid', function(req, res){
 		var share = new Share();
 		//console.log('sharegetreq derek mark index js');
 		//console.log(req.url);
-		share.getShare(req.url ,req.params.name,req.params.time,req.params.title,req.params.sharerid,function(err,post,sharer,qrcode){
+		share.getShare(req.url ,req.params.name,req.params.time,req.params.title,req.params.sharerid,function(err,post,sharer){
 			if(err){
 				console.log('share fail...');
 				res.redirect('https://www.baidu.com/search/error.html');
@@ -615,7 +615,6 @@ router.get('/share/:name/:time/:title/:sharerid', function(req, res){
 				user: req.session.user,
 				sharer: sharer,
 				post: post,
-				qrcode: qrcode,
 				success: req.flash('success').toString(),
 				error: req.flash('error').toString()
 			});	
