@@ -7,7 +7,7 @@
 
 var http = require("http");
 var https = require("https");
-var jsSHA = require('jssha');
+var sha1 = require('sha1');
 var querystring = require('querystring');
 
 module.exports = function(app){
@@ -78,9 +78,7 @@ module.exports = function(app){
 	// 计算签名
 	var calcSignature = function (ticket, noncestr, ts, url) {
 		var str = 'jsapi_ticket=' + ticket + '&noncestr=' + noncestr + '&timestamp='+ ts +'&url=' + url;
-		var shaObj = new jsSHA("SHA-512", "TEXT");
-		shaObj.update(str);
-		return shaObj.getHash("HEX");
+		return sha1(str);
 	}
 
 	// 获取微信签名所需的ticket
