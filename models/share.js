@@ -27,7 +27,7 @@ function ShareToOtherPlatform(url, sid, callback){
 	//GenSURL(name,time,title,sharerid,function(url){
 	//	sharedurl = url;
 	//});
-	sharedurl = 'http://smartcreate.net:' + global.PORT + url.substring(0, (url.length-2));
+	sharedurl = 'http://www.smartcreate.net:' + global.PORT + url.substring(0, (url.length-2));
     console.log(sharedurl);
 	//console.log(sid);
 	if(sid == SHARE_TO_WX){
