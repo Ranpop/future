@@ -95,7 +95,7 @@
 			</li>
 			<li>
 				<% if (user) { %>
-				<a class="btn btn-primary btn-lg" href="/sendresumesimple/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>/<%= user%>" role="button" style="background-color:rgba(0,255,0,0.5)">自己投简历</a>
+				<a class="btn btn-primary btn-lg" href="/sendresumesimple/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>/<%= user.name%>" role="button" style="background-color:rgba(0,255,0,0.5)">自己投简历</a>
 				<% } else { %>
 				<a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-whatever="send" role="button" style="background-color:rgba(0,255,0,0.5)">自己投简历</a>
 				<% } %>
@@ -137,7 +137,7 @@
 	$("#mcover").css("display","block")    // 分享给好友按钮触动函数
 			 //to do inform the system the new sharer
 			 <% if (user) { %>
-			 	user_phoneno = '<%= user%>';
+			 	user_phoneno = '<%= user.name%>';
 			 <% } %>
 			 addnewsharerjs(user_phoneno,'<%= sharer%>','<%= post.name %>','<%= post.time.day %>','<%= post.title %>');		
 	}
@@ -149,8 +149,8 @@
 		$('#myModal').modal('hide');
 	}
 	function getsendresumesimply(){
-		console.log('/sendresumesimple/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>/<%= user%>' + user_phoneno);
-		window.location.href = '/sendresumesimple/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>/<%= user%>' + user_phoneno;
+		console.log('/sendresumesimple/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>/' + user_phoneno);
+		window.location.href = '/sendresumesimple/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>/' + user_phoneno;
 	}
 	</script>
 </body>

@@ -563,7 +563,7 @@ router.get('/sendresumesimple/:name/:time/:title/:sharerid/:userid', function(re
 		console.log(req.params.sharerid);
 		res.render('sendresumesimple', {
 			title: 'sendresumesimple',
-			user: req.session.user,
+			user: req.params.userid,
 			paramsname: req.params.name,
 			paramstime: req.params.time,
 			paramstitle: req.params.title,
