@@ -741,8 +741,13 @@ router.get('/sendresumereq/:name/:time/:title/:sharerid', function(req, res){
 });	
 
 //test wxapi
-router.get('/testwxapi', function(req, res){
-			res.render('testwxapi',{
+router.get('/sendphtoresume/:name/:time/:title/:sharerid/:userid', function(req, res){
+			res.render('sendphtoresume',{
+				postwritername: req.params.name,
+				postwritetime: req.params.time,
+				postwritetitle: req.params.title,
+				sharerid: req.params.sharerid,
+				userid: req.params.userid,
 				success: req.flash('success').toString(),
 				error: req.flash('error').toString()
 			});	

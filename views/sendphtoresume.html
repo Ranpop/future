@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title><%= postwritetitle %></title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/bootstrap/cust-css/style.css" rel="stylesheet">
+
+    <link href="/bootstrap/cust-css/site.min.css" rel="stylesheet">
+</head>
+<body>
+	<div class="jumbotron masthead">
+	<div class="container">
+		<a class="text-center">note!you should be careful to take a clear photo resume,otherwise the HR would ignore your resume!</a>
+        <p class="masthead-button-links">
+          <a id="addPic" class="btn btn-lg btn-primary btn-shadow" target="_blank" role="button" onclick="_hmt.push(['_trackEvent', 'masthead', 'click', 'CartBoarder 手机客户端'])">take a photo of your resume</a>
+        </p>
+	</div>
+	</div>
+
+
+    <!-- jQuery -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script>
+		$.ajax({
+			url: 'http://smartcreate.net:3000/wechatsigserver/0/'// 此处url请求地址需要替换成你自己实际项目中服务器数字签名服务地址
+			,type: 'post'
+			,data: {
+				url: location.href.split('#')[0] // 将当前URL地址上传至服务器用于产生数字签名
+			}
+		}).done(function(r){
+			// 返回了数字签名对象
+			console.log(r);
+			console.log(r.appid);
+			console.log(r.timestamp);
+			console.log(r.nonceStr);
+			console.log(r.signature);
+
+			// 开始配置微信JS-SDK
+			wx.config({
+		        debug: true,
+		        appId: r.appid,
+		        timestamp: r.timestamp,
+		        nonceStr: r.nonceStr,
+		        signature: r.signature,
+		        jsApiList: [
+		            'checkJsApi',
+		            'onMenuShareTimeline',
+		            'onMenuShareAppMessage',
+		            'onMenuShareQQ',
+		            'onMenuShareWeibo',
+		            'hideMenuItems',
+		            'chooseImage'
+		        ]
+		    });
+		    
+		    // 调用微信API
+		    wx.ready(function(){
+		    	var sdata = {
+				    title: 'arrdu|测试微信分享及相关API',
+				    desc: 'arrdu|测试微信分享及相关API',
+				    link: 'http://smartcreate.net:3000',
+				    imgUrl: 'http://smartcreate.net:3000/images/20080121174220593.jpg',
+				    success: function () { 
+				        alert('用户确认分享后执行的回调函数');
+				    },
+				    cancel: function () { 
+				        alert('用户取消分享后执行的回调函数');
+				    }
+				};
+		    	wx.onMenuShareTimeline(sdata);
+				wx.onMenuShareAppMessage(sdata);
+				// 添加图片
+				$('#addPic').on('click', function(){
+					wx.chooseImage({
+					    success: function (res) {
+					        var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+					        // var imgs = localIds.split(',');
+					        localIds.forEach(function(v, i){
+					        	alert(v);
+					        	$('#picList').append('<li><img src="'+ v +'" alt="" width="50"></li>');
+					        });
+					    }
+					});
+				});
+		    });
+		});
+	</script>
+</body>
+</html>
