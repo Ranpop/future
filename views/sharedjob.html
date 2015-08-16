@@ -20,6 +20,29 @@
 
 
 <body>
+	<!--indication appearence-->
+	<style>
+	 #mcover {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.7);
+		z-index: 20000;
+	 }
+	 #mcover img {
+		position: fixed;
+		right: 18px;
+		top: 5px;
+		width: 260px!important;
+		height: 180px!important;
+		z-index: 20001;
+	 }
+	 </style>
+	<div id="mcover" onclick="shareIndDisappear()" style="display:none;">
+      <img src="https://mmbiz.qlogo.cn/mmbiz/vV3bdMHsLIjY2s0npKT0FaJ6iaC1MaiciakM61zfqBsNjYH14ovUG145GEuwMPafiaPjh5drSaAg8DMTic3a2I3icbLg/0" />
+   </div>
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
@@ -51,6 +74,7 @@
 	</div>
     <!-- Page Content -->
     <div class="container">
+
     	<div class="divtitle ">
     		<a><%= post.title %></a>
     	</div>
@@ -58,9 +82,15 @@
     	<ul id="sendresumestick" class="list-inline navbar-static-top">
 			<li>
 				<% if (user) { %>
-				<a class="btn btn-primary btn-lg" href="javascript:WeiXinShareBtn();" role="button" style="background-color:rgba(255,0,0,0.5)">分享给身边的好友</a>
+				<a class="btn btn-primary btn-lg" href="javascript:shareIndAppear();" role="button" style="background-color:rgba(100,150,200,0.5)">
+					<img src="https://mmbiz.qlogo.cn/mmbiz/vV3bdMHsLIjY2s0npKT0FaJ6iaC1MaiciakIHMqX6tb7127kicbBd5vIZcey4wenREiaEe8YXshOWpFcIser6AgbsEA/0" width="20em" height="20em" />
+					微信分享赚外快
+				</a>
 				<% } else { %>
-				<a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-whatever="share" role="button" style="background-color:rgba(255,0,0,0.5)">分享给身边的好友</a>
+				<a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-whatever="share" role="button" style="background-color:rgba(100,150,200,0.5)">
+					<img src="https://mmbiz.qlogo.cn/mmbiz/vV3bdMHsLIjY2s0npKT0FaJ6iaC1MaiciakIHMqX6tb7127kicbBd5vIZcey4wenREiaEe8YXshOWpFcIser6AgbsEA/0" width="20em" height="20em" />
+					微信分享赚外快
+				</a>
 				<% } %>
 			</li>
 			<li>
@@ -89,8 +119,6 @@
     <script src="/bootstrap/dist/js/socket.io.js"></script>
     <!-- AuthCodeGen websocket JavaScript -->
     <script src="/bootstrap/dist/js/authcode-ws-client.js"></script>  
-    <!-- weixin js sdk -->
-    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 
 	<script type="text/javascript"> //initiating jQuery 
 	jQuery(function($) { $(document).ready( function() { 
@@ -104,24 +132,22 @@
 	  console.log('myModal : ' + shareorsend);
 	});
 
-	function WeiXinShareBtn() { 
-	 if (typeof WeixinJSBridge == "undefined") { 
-	 		alert("please add our public no ranpop,you must share it in the weichat browserrrrrrrrrr"); 
-	 } else { 
-	 	alert("dddddddd"); 
-			 WeixinJSBridge.invoke('shareTimeline', { 
-			 "title": "future", 
-			 "link": "http://smartcreate.net", 
-			 "desc": "关注互联网创业", 
-			 "img_url": "http://www.36kr.com/assets/images/apple-touch-icon.png" 
-			 }); 
+	function shareIndAppear(){
+		console.log('shareIndAppear');
+	$("#mcover").css("display","block")    // 分享给好友按钮触动函数
 			 //to do inform the system the new sharer
 			 <% if (user) { %>
 			 	user_phoneno = '<%= user%>';
 			 <% } %>
-			 addnewsharerjs(user_phoneno,'<%= sharer%>','<%= post.name %>','<%= post.time.day %>','<%= post.title %>');
-	 } 
-	 }
+			 addnewsharerjs(user_phoneno,'<%= sharer%>','<%= post.name %>','<%= post.time.day %>','<%= post.title %>');		
+	}
+	function shareIndDisappear(){
+		console.log('shareIndDisappear');
+	$("#mcover").css("display","none");  // 点击弹出层，弹出层消失
+	}
+	function closeModal(){
+		$('#myModal').modal('hide');
+	}
 	function getsendresumesimply(){
 		console.log('/sendresumesimple/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>/<%= user%>' + user_phoneno);
 		window.location.href = '/sendresumesimple/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>/<%= user%>' + user_phoneno;

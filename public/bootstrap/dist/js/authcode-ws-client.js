@@ -17,7 +17,8 @@ socket.on('confirmauthcode_resp', function (_respcode) {
 	console.log('respconfirmed: ' + shareorsend);
 	if(shareorsend == 'share'){
 		$("#authcodedis").html("confirm ok!!! share"); 
-		WeiXinShareBtn();
+		closeModal();
+		shareIndAppear();
 	}
 	else if(shareorsend == 'send'){
 		$("#authcodedis").html("confirm ok!!! send"); 
