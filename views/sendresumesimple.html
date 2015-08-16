@@ -1,21 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title><%= paramsname %></title>
 
-<%
-var ifeditorexist = 0;
-var isloginpage = 0;
-%>
-<%- include header.html %>
+    <!-- Bootstrap Core CSS -->
+    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/bootstrap/cust-css/style.css" rel="stylesheet">
 
 <body>
 
-    <!-- Navigation -->
-<%-include global-navbar.html%>
-
     <!-- Page Content -->
     <div class="container disend-2p5em">
-
-        <div class="row">
+      <div class="divtitle ">
+        <a>Please fullfill your resume simply</a>
+      </div>
+      <hr>
         <form method="post">
           <div class="form-group">
             <label for="interviewername">name</label>
@@ -37,10 +41,11 @@ var isloginpage = 0;
             <label for="interviewerworkingyears">working years</label>
             <input type="text" name="interviewerworkingyears" class="form-control" id="interviewergoodin" placeholder="how many years are you working in your major?">
           </div>
+          <div class="pull-right">
           <input type="reset" class="btn btn-default" name="reset" value="重置" />
           <input type="submit" class="btn btn-default" name="submit" value="提交">
+          </div>
         </form>
-        </div>
         <!-- Footer -->
 <%-include footer.html%>
 
