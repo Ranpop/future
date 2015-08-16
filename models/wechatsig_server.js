@@ -78,8 +78,9 @@ module.exports = function(app){
 	// 计算签名
 	var calcSignature = function (ticket, noncestr, ts, url) {
 		var str = 'jsapi_ticket=' + ticket + '&noncestr=' + noncestr + '&timestamp='+ ts +'&url=' + url;
-		shaObj = new jsSHA(str, 'TEXT');
-		return shaObj.getHash('SHA-1', 'HEX');
+		var shaObj = new jsSHA("SHA-512", "TEXT");
+		shaObj.update(str);
+		return shaObj.getHash("HEX");
 	}
 
 	// 获取微信签名所需的ticket
