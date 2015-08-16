@@ -24,6 +24,9 @@
           <a id="addPic" class="btn btn-lg btn-primary btn-shadow" target="_blank" role="button" onclick="_hmt.push(['_trackEvent', 'masthead', 'click', 'CartBoarder 手机客户端'])">take a photo of your resume</a>
         </p>
 	</div>
+	<div class="container">
+	<ul id="picList" class="list-unstyled"></ul>
+	</div>
 	</div>
 
 
@@ -49,7 +52,7 @@
 
 			// 开始配置微信JS-SDK
 			wx.config({
-		        debug: true,
+		        debug: false,
 		        appId: r.appid,
 		        timestamp: r.timestamp,
 		        nonceStr: r.nonceStr,
@@ -67,6 +70,7 @@
 		    
 		    // 调用微信API
 		    wx.ready(function(){
+		    	<!--
 		    	var sdata = {
 				    title: 'arrdu|测试微信分享及相关API',
 				    desc: 'arrdu|测试微信分享及相关API',
@@ -88,8 +92,8 @@
 					        var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
 					        // var imgs = localIds.split(',');
 					        localIds.forEach(function(v, i){
-					        	alert(v);
-					        	$('#picList').append('<li><img src="'+ v +'" alt="" width="50"></li>');
+					        	//alert(v);
+					        	$('#picList').append('<li><img src="'+ v +'" alt="" width="auto"></li>');
 					        });
 					    }
 					});
