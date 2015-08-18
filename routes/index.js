@@ -25,8 +25,7 @@ wehatsigserver(router);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	console.log(req.url);
-	console.log(req.method);
+	console.log(req.session);
 	Post.getAll(null, function(err, posts){
 		if(err){
 			posts = [];
@@ -43,7 +42,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/l', function(req, res){
-		console.log(req.url);
+		//console.log(req.url);
 		//console.log(req.method);
 		req.url = '/';
 		Post.getLastAll(null, function(err, posts){
@@ -148,12 +147,12 @@ router.get('/reg', function(req, res){
 		success: req.flash('success').toString(),
 		error: req.flash('error').toString()
 	});
-	console.log("open database0");
+	//console.log("open database0");
 });
 
 router.post('/reg', checkNotLogin);
 router.post('/reg', function(req, res){
-	console.log("open database1.0");
+	//console.log("open database1.0");
 	//var	User = require('../models/dbuser.js');
 	var name = req.body.name,
 		password = req.body.password,
@@ -164,7 +163,6 @@ router.post('/reg', function(req, res){
 	console.log("password_re:"+password_re);
 	if(password_re != password){
 		req.flash('error', '两次输入的密码不一致！');
-		console.log("open database1.6");
 		return res.redirect('/reg');//返回注册页
 	}
 	//生成密码的md5值
@@ -180,19 +178,16 @@ router.post('/reg', function(req, res){
 	User.get(newUser.name, function(err, user){
 		if(user){
 			req.flash('error', '用户已经存在!');
-			console.log("open database1.7");
 			return res.redirect('/reg');//返回注册页
 		}
 		//如果用户不存在则新增用户
 		newUser.save(function(err, user){
 			if(err){
 				req.flash('error', 'err');
-				console.log("open database1.8");
 				return res.redirect('/reg');  //注册失败返回注册页
 			}
 			req.session.user = user;//用户信息存入session
 			req.flash('success', '注册成功');
-			console.log("open database1.9");
 			res.redirect('/login');//注册成功后返回主页
 		});
 	});
@@ -210,8 +205,6 @@ router.get('/login', function(req, res){
 
 router.post('/login', checkNotLogin);
 router.post('/login', function(req, res){
-	console.log("open database1.1");
-	console.log(req);
 	//生成密码md5值
 	var md5 = crypto.createHash('md5'),
 		password = md5.update(req.body.password).digest('hex');
