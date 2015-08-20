@@ -83,6 +83,7 @@ module.exports = function(app){
 
 	// 获取微信签名所需的ticket
 	var getTicket = function (url, index, res, accessData) {
+		appIds[index].accesstoken = accessData.access_token;
 		https.get('https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token='+ accessData.access_token +'&type=jsapi', function(_res){
 			var str = '', resp;
 			_res.on('data', function(data){
@@ -101,6 +102,8 @@ module.exports = function(app){
 				var nonceStr = createNonceStr();
 				var ticket = resp.ticket;
 				var signature = calcSignature(ticket, nonceStr, ts, url);
+
+				appIds[index].ticket = resp.ticket;
 
 				cachedSignatures[url] = {
 					nonceStr: nonceStr

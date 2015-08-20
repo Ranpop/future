@@ -17,11 +17,34 @@
     <link href="/bootstrap/cust-css/site.min.css" rel="stylesheet">
 </head>
 <body>
+<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	 <div class="modal-dialog" role="document">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	       <h4 class="modal-title" id="myModalLabel">success</h4>
+	    </div>
+	    <div class="modal-body">
+	        please wait for the HR to contact you,good luck!
+	    </div>
+	    <div class="modal-footer">
+	       <button type="button" class="btn btn-default" data-dismiss="modal">Leave</button>
+	       <button type="button" class="btn btn-primary">Download our app</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Button trigger modal -->
+	<button id="launchmodalbtn" type="button" class="btn btn-primary btn-lg hidden" data-toggle="modal" data-target="#myModal">
+	  Launch demo modal
+	</button>
 	<div class="jumbotron masthead">
 	<div class="container">
 		<a class="text-center">note!you should be careful to take a clear photo resume,otherwise the HR would ignore your resume!</a>
         <p class="masthead-button-links">
           <a id="addPic" class="btn btn-lg btn-primary btn-shadow" target="_blank" role="button" onclick="_hmt.push(['_trackEvent', 'masthead', 'click', 'CartBoarder 手机客户端'])">take a photo of your resume</a>
+          <a id="uploadPic" class="btn btn-lg btn-primary btn-shadow hidden" target="_blank" role="button" onclick="_hmt.push(['_trackEvent', 'masthead', 'click', 'CartBoarder 手机客户端'])">upload</a>
         </p>
 	</div>
 	</div>
@@ -34,7 +57,10 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script src="/bootstrap/dist/js/socket.io.js"></script>
+	<script src="/bootstrap/dist/js/uploadpic-ws-client.js"></script>
 	<script>
+		var localIds;
 		$.ajax({
 			url: 'http://smartcreate.net:3000/wechatsigserver/0/'// 此处url请求地址需要替换成你自己实际项目中服务器数字签名服务地址
 			,type: 'post'
@@ -63,13 +89,13 @@
 		            'onMenuShareQQ',
 		            'onMenuShareWeibo',
 		            'hideMenuItems',
-		            'chooseImage'
+		            'chooseImage',
+		            'uploadImage'
 		        ]
 		    });
 		    
 		    // 调用微信API
 		    wx.ready(function(){
-		    	<!--
 		    	var sdata = {
 				    title: 'arrdu|测试微信分享及相关API',
 				    desc: 'arrdu|测试微信分享及相关API',
@@ -84,16 +110,32 @@
 				};
 		    	wx.onMenuShareTimeline(sdata);
 				wx.onMenuShareAppMessage(sdata);
+				// upload pics
+				$('#uploadPic').on('click', function(){
+			        localIds.forEach(function(v, i){
+						wx.uploadImage({
+						    localId: v, // 需要上传的图片的本地ID，由chooseImage接口获得
+						    isShowProgressTips: 1, // 默认为1，显示进度提示
+						    success: function (res) {
+						        informServerToRecv(res.serverId);
+						    }
+						});
+			        });
+				});
 				// 添加图片
 				$('#addPic').on('click', function(){
 					wx.chooseImage({
 					    success: function (res) {
-					        var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+					        localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
 					        // var imgs = localIds.split(',');
 					        localIds.forEach(function(v, i){
 					        	//alert(v);
 					        	$('#picList').append('<li><img src="'+ v +'" alt="" width="auto"></li><hr>');
 					        });
+					        if(localIds.length > 0){
+					        	count = localIds.length;
+					        	$('#uploadPic').show();
+					        }
 					    }
 					});
 				});
