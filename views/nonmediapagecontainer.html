@@ -3,14 +3,6 @@
                 <ul id="myTabs" class="nav nav-tabs" role="tablist">
                   <li role="presentation" class="active"><a href="#Allposts" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">所有内容</a></li>
                   <li role="presentation"><a href="#wanderfulposts" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile">精华内容</a></li>
-                  <!--
-                  <li role="presentation" class="dropdown">
-                    <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" aria-controls="myTabDrop1-contents">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">
-                      <li><a href="#dropdown1" role="tab" id="dropdown1-tab" data-toggle="tab" aria-controls="dropdown1">@fat</a></li>
-                      <li><a href="#dropdown2" role="tab" id="dropdown2-tab" data-toggle="tab" aria-controls="dropdown2">@mdo</a></li>
-                    </ul>
-                  </li>-->
                 </ul>
                 <!-- First Blog Post -->
                 <div role="tabpanel" class="tab-pane fade in active" id="Allposts" aria-labelledBy="home-tab">
@@ -30,65 +22,32 @@
                         <% } %>
                         </td>    
                     </tr>
-                <!--
-                <hr>
-                <iframe id="videoemb" src="http://player.youku.com/embed/XMjk3MTUyMzgw" frameborder=0 allowfullscreen></iframe>-->
-                <!--<img class="img-responsive" src="/images/203fb80e7bec54e73a285d19bb389b504ec26af4.jpg" alt="">-->
-                <!--<p>  <%= post.brief %></p>-->
-
-
-<!--
-                <p class="info">
-                    作者:<a href="/u/<%= post.name %>"><%= post.name %></a> |
-                    日期:<%= post.time.minute %>
-                    标签:
-                <% post.tags.forEach(function(tag, index){ %>
-                <% if(tag){ %>
-                <a class="tag" href="/blog/tags/<%= tag %>"><%= tag %></a>
-                <% } %>
-                <% }) %>
-                </p>
-                <p><%- post.post %></p>
-                <p class="info">阅读: <%= post.pv %> | 评论: <%= post.comments.length %></p>
-                <a class="btn btn-primary" href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">更多... <span class="glyphicon glyphicon-chevron-right"></span></a> -->
                 <% count = count + 1; %>
                 <% } %>
                 <% }) %>
-                <!-- Second Blog Post 
-                <h2>
-                    <a href="#">这是一条勇者的路</a>
-                </h2>
-                <p class="lead">
-                    by <a href="#">ranpop</a>
-                </p>
-                <p><span class="glyphicon glyphicon-time"></span> 发表于 2015年6月16日22:50</p>
-                <hr>
-                <img class="img-responsive" src="/images/902397dda144ad34993d1986d2a20cf431ad8535.jpg" alt="">
-                <hr>
-                <p>勇者，智者，道者，水也。</p>
-                <a class="btn btn-primary" href="#">更多... <span class="glyphicon glyphicon-chevron-right"></span></a>
-                <hr>-->
                 </table>
                 <!-- Pager -->
                 </div>
-
                   <div role="tabpanel" class="tab-pane fade" id="wanderfulposts" aria-labelledBy="profile-tab">
                   </div>
                 <hr>
-                <ul class="pager">
-                    <li class="previous">
-                        <a href="/l" name="one">&larr; 返回第一页</a>
-                    </li>
+                <nav>
+                  <ul class="pagination">
                     <li>
-                        <div class="btn-group" role="group" aria-label="...">
-                          <button type="button" class="btn btn-default">1</button>
-                          <button type="button" class="btn btn-default">2</button>
-                          <button type="button" class="btn btn-default">3</button>
-                          <button type="button" class="btn btn-default">...</button>
-                        </div>
+                      <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
                     </li>
-                    <li class="next">
-                        <a href="/" name="two">直达最后一页 &rarr;</a>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li>
+                      <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
                     </li>
-                </ul>
+                  </ul>
+                </nav>
             </div>
