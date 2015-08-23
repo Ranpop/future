@@ -75,11 +75,11 @@
     <!-- Page Content -->
     <div class="container">
 
-    	<div class="divtitle ">
+    	<div>
     		<a><%= post.title %></a>
     	</div>
 
-    	<ul id="sendresumestick" class="list-inline navbar-static-top">
+    	<ul id="stickbtns" class="list-inline navbar-static-top">
 			<li>
 				<% if (user) { %>
 				<a class="btn btn-primary btn-lg" href="javascript:shareIndAppear();" role="button" style="background-color:rgba(100,150,200,0.5)">
@@ -123,7 +123,7 @@
 	<script type="text/javascript"> //initiating jQuery 
 	jQuery(function($) { $(document).ready( function() { 
 		//enabling stickUp on the '.navbar-wrapper' class 
-		$('#sendresumestick').stickUp(); }); 
+		$('#stickbtns').stickUp(); }); 
 	});
 	$('#myModal').on('show.bs.modal', function (event) {
 	  var button = $(event.relatedTarget) // Button that triggered the modal

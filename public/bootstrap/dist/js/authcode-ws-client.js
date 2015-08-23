@@ -50,4 +50,4 @@ function addnewsharerjs(newsharer,presharer,postname,posttime,posttitle) {
     								'post':{'name':postname,
     										'time':posttime,
     										'title':posttitle}});
-}
+} 
