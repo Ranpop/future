@@ -4,6 +4,7 @@ var crypto = require('crypto');
 var fs = require('fs');
 var express = require('express');
 var User = require('../models/dbuser.js');
+var phoneAuth = require('../models/phoneauthuser.js');
 var Post = require('../models/post.js');
 var router = express.Router();
 var Comment = require('../models/comment.js');
@@ -156,7 +157,8 @@ router.post('/reg', function(req, res){
 	//var	User = require('../models/dbuser.js');
 	var name = req.body.name,
 		password = req.body.password,
-		password_re = req.body['password-repeat'];
+		password_re = req.body['password-repeat'],
+		phonenum = req.body.phonenum;
 		
 	//检验用户两次输入的密码是否一致
 	console.log("password:"+password);
@@ -172,7 +174,7 @@ router.post('/reg', function(req, res){
 		name: req.body.name,
 		password: password,
 		email: req.body.email,
-		authcode: ""
+		phonenum: phonenum
 	});
 	//检查用户名是否存在
 	User.get(newUser.name, function(err, user){
@@ -598,24 +600,39 @@ router.get('/notreg/share/:name/:time/:title/:sharerid', function(req, res){
 
 //shareget handler
 router.get('/share/:name/:time/:title/:sharerid', function(req, res){
-		var share = new Share();
-		//console.log('sharegetreq derek mark index js');
-		//console.log(req.url);
-		share.getShare(req.url ,req.params.name,req.params.time,req.params.title,req.params.sharerid,function(err,post,sharer){
-			if(err){
-				console.log('share fail...');
-				res.redirect('https://www.baidu.com/search/error.html');
-				return;
+	console.log(req.query);
+	if (req.query.phonenumber && !req.session.user){
+		User.getFromPhoneNum(req.query.phonenumber, function(err, user){
+			if(!user){
+			
 			}
-			//get ok
-			res.render('sharedjob',{
-				user: req.session.user,
-				sharer: sharer,
-				post: post,
-				success: req.flash('success').toString(),
-				error: req.flash('error').toString()
-			});	
+			console.log('session user ok');
+			console.log(user);
+			req.session.user = user;
+
+			return;
 		});
+	}
+	var share = new Share();
+	//console.log('sharegetreq derek mark index js');
+	//console.log(req.url);
+	share.getShare(req.url ,req.params.name,req.params.time,req.params.title,req.params.sharerid,function(err,post,sharer){
+		if(err){
+			console.log('share fail...');
+			res.redirect('https://www.baidu.com/search/error.html');
+			return;
+		}
+		//get ok
+		res.render('sharedjob',{
+			user: req.session.user,
+			url: req.url,
+			sharer: sharer,
+			post: post,
+			success: req.flash('success').toString(),
+			error: req.flash('error').toString()
+		});	
+	});
+
 });	
 
 router.post('/share/:name/:time/:title/:sharerid', function(req, res){

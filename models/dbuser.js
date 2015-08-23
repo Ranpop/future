@@ -5,7 +5,7 @@ function User(user){
 	this.name = user.name;
 	this.password = user.password;
 	this.email = user.email;
-	this.authcode = user.authcode;
+	this.phonenum = user.phonenum;
 };
 
 module.exports = User;
@@ -17,7 +17,7 @@ User.prototype.save = function(callback){
 		name: this.name,
 		password: this.password,
 		email: this.email,
-		authcode: this.authcode
+		phonenum: this.phonenum
 	};
 	//打开数据库
 	mongodb.open(function(err, db){
@@ -36,6 +36,8 @@ User.prototype.save = function(callback){
 				if(err){
 					return callback(err); //错误，返回
 				}
+				console.log('user: ' + user);
+				console.log('user[0]: '+ user[0]);
 				callback(null, user[0]); //成功，err为null，返回用户存储后的用户文档
 			});
 		});
@@ -66,4 +68,31 @@ User.get = function(name, callback){
 		});
 	});
 };
+
+//读取用户信息
+User.getFromPhoneNum = function(phonenum, callback){
+	//打开数据库
+	mongodb.open(function(err, db){
+		if(err){
+			return callback(err); //错误
+		}
+		//读取users集合
+		db.collection('users', function(err, collection){
+			if(err){
+				mongodb.close();
+				return callback(err); //错误
+			}
+			//查找用户信息(name键值)为name的一个文档
+			collection.findOne({phonenum: phonenum}, function(err, user){
+				mongodb.close();
+				if(err){
+					return callback(err);
+				}
+				callback(null, user);//成功，返回查询用户信息
+			});
+		});
+	});
+};
+
+
 

@@ -1,6 +1,7 @@
 /**
  * Created by arrdu on 2015/8/10.
  */
+var phoneAuth = require('../models/phoneauthuser.js');
 var getAppsInfo = require('./apps-info'); // 从外部加载app的配置信息
 var appIds = getAppsInfo();
 var io = require('socket.io')();
@@ -16,13 +17,21 @@ io.on('connection', function (socket) {
     socket.on('getauthcode_req', function (phoneno) {
         console.log(socket.id + ': phoneno :' + phoneno);
         //todo generate the authcode
-
-        socket.emit('getauthcode_resp', phoneno);
+        phoneAuth.generateAuthCode(phoneno, function(authCode){
+            socket.emit('getauthcode_resp', authCode);
+        });
     });
 
-    socket.on('confirmauthcode_req', function (authcode) {
-        console.log(socket.id + ': confirmauthcode :' + authcode);
-        socket.emit('confirmauthcode_resp','RET_CONFIRMAUTHCODE_SUC');
+    socket.on('confirmauthcode_req', function (phonenum, authcode) {
+        console.log(socket.id + ': confirmauthcode :' + authcode + ' phonenum ' + phonenum);
+        phoneAuth.storePhoneUser(phonenum, authcode, function(err){
+            if (err){
+                socket.emit('confirmauthcode_resp','RET_CONFIRMAUTHCODE_FAILED');
+            }
+            else{
+                socket.emit('confirmauthcode_resp','RET_CONFIRMAUTHCODE_SUC');
+            }
+        });
     });
 
     socket.on('addnewshare_req', function (newshare) {
