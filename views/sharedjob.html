@@ -138,21 +138,14 @@
 
 	function shareIndAppear(){
 		console.log('shareIndAppear');
-		//window.location.replace(window.location.href);
-		$.ajax({
-			url: window.location.href,
-			type: 'get',
-			data: {
-				"phonenumber": user_phoneno
-			}
-		});
+		//window.location.replace(window.location.href)
 
-		//$("#mcover").css("display","block")    // 分享给好友按钮触动函数
+		$("#mcover").css("display","block")    // 分享给好友按钮触动函数
 			 //to do inform the system the new sharer
 			 <% if (user) { %>
 			 	user_phoneno = '<%= user.name%>';
 			 <% } %>
-			 //addnewsharerjs(user_phoneno,'<%= sharer%>','<%= post.name %>','<%= post.time.day %>','<%= post.title %>');		
+			 addnewsharerjs(user_phoneno,'<%= sharer%>','<%= post.name %>','<%= post.time.day %>','<%= post.title %>');		
 	}
 	function shareIndDisappear(){
 		console.log('shareIndDisappear');
