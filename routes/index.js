@@ -601,25 +601,66 @@ router.get('/notreg/share/:name/:time/:title/:sharerid', function(req, res){
 //shareget handler
 router.get('/share/:name/:time/:title/:sharerid', function(req, res){
 	console.log(req.query);
+	console.log(req.url);
+	var changeUrl = req.url,
+	    userName = req.params.name,
+		titleTime = req.params.time,
+		title = req.params.title,
+		titleShareId = req.params.sharerid;
+
 	if (req.query.phonenumber && !req.session.user){
 		User.getFromPhoneNum(req.query.phonenumber, function(err, user){
 			if(!user){
 			
 			}
 			console.log('session user ok');
-			console.log(user);
+			//console.log(user);
 			req.session.user = user;
 
-			return;
+			//return;
 		});
+		var paramsString = '';
+		paramsString += req.url;
+		var startIndex = 7;
+		var getParamsFromUrl = function(index, paramsString, callback){
+			for (var i=index; i<paramsString.length; i++){
+				if ('/' == paramsString[i]) {
+					return callback(i);
+				}
+			}
+		};
+		getParamsFromUrl(startIndex, paramsString, function(indexend){
+			userName = paramsString.substring(startIndex, indexend);
+			console.log('userName : '+ userName);
+			startIndex = indexend + 1;
+		});
+		getParamsFromUrl(startIndex, paramsString, function(indexend){
+			userName = paramsString.substring(startIndex, indexend);
+			console.log('titleTime : '+ titleTime);
+			startIndex = indexend + 1;
+		});
+		getParamsFromUrl(startIndex, paramsString, function(indexend){
+			userName = paramsString.substring(startIndex, indexend);
+			console.log('title : '+ title);
+			startIndex = indexend + 1;
+		});
+		getParamsFromUrl(startIndex, paramsString, function(indexend){
+			userName = paramsString.substring(startIndex, indexend);
+			console.log('titleShareId : '+ titleShareId);
+			changeUrl = paramsString.substring(0, indexend+1);
+			console.log('url: '+changeUrl);
+			//startIndex = indexend + 1;
+		});
+
 	}
 	var share = new Share();
 	//console.log('sharegetreq derek mark index js');
 	//console.log(req.url);
-	share.getShare(req.url ,req.params.name,req.params.time,req.params.title,req.params.sharerid,function(err,post,sharer){
+	console.log('userName : '+ userName + 'titleTime : '+ titleTime + 'title : '+ title);
+	share.getShare(changeUrl, userName, titleTime, title,titleShareId,function(err,post,sharer){
 		if(err){
 			console.log('share fail...');
-			res.redirect('https://www.baidu.com/search/error.html');
+			//res.redirect('https://www.baidu.com/search/error.html');
 			return;
 		}
 		//get ok

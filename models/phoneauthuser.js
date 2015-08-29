@@ -19,7 +19,7 @@ exports.generateAuthCode = function(phonenum, callback){
 exports.storePhoneUser = function(phonenum, authCode, callback){
 	++session.user;
 	if (phonenum != session.phonenum || authCode != session.authcode){
-		return callback(err);
+		return callback(null);
 	}
 
 	var authUser = new User({
@@ -56,6 +56,6 @@ exports.storePhoneUser = function(phonenum, authCode, callback){
 };
 
 exports.getSessionUser = function(callback){
-	console.log(session);
+	//console.log(session);
 	callback(session.user);
 }

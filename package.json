@@ -19,6 +19,7 @@
     "connect-flash": "*",
     "markdown": "*",
     "formidable": "latest",
-    "socket.io":"*"
+    "socket.io":"*",
+    "session.socket.io":"*"
   }
 }
