@@ -20,6 +20,11 @@
     "markdown": "*",
     "formidable": "latest",
     "socket.io":"*",
-    "session.socket.io":"*"
+    "session.socket.io":"*",
+    "wechat":"*",
+    "wechat-api":"*",
+    "qrcode":"*",
+    "canvas":"*",
+    "sha1":"*"
   }
 }
