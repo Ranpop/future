@@ -5,6 +5,8 @@ var phoneAuth = require('../models/phoneauthuser.js');
 var getAppsInfo = require('./apps-info'); // 从外部加载app的配置信息
 var appIds = getAppsInfo();
 var io = require('socket.io')();
+//var SessionSockets = require('session.socket.io');
+//var sessionSockets = new SessionSockets(io, )
 
 io.on('connection', function (socket) {
     console.log(socket.id + ': connection');

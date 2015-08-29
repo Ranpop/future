@@ -31,14 +31,12 @@ User.prototype.save = function(callback){
 				return callback(err); //错误
 			}
 			//将用户数据插入users集合
-			collection.insert(user, {safe: true}, function(err, user){
+			collection.insert(user, {safe:true}, function(err, user){
 				mongodb.close();
 				if(err){
 					return callback(err); //错误，返回
 				}
-				console.log('user: ' + user);
-				console.log('user[0]: '+ user[0]);
-				callback(null, user[0]); //成功，err为null，返回用户存储后的用户文档
+				callback(null, user.ops[0]); //成功，err为null，返回用户存储后的用户文档
 			});
 		});
 	});

@@ -20,18 +20,20 @@ app.engine('.html', ejs.__express);
 app.set('view engine', 'html');
 app.use(flash());
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, '/public/bootstrap/images/favicon.ico')));
+var myCookieParse = cookieParser();
+var mySessionStore = new MongoStore({db:settings.db});
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(myCookieParse);
 app.use(session({
   secret:settings.cookieSecret,
   key:settings.db,
   cookie:{maxAge:1000*60*60*24*30},
-  store:new MongoStore({db:settings.db})
+  store: mySessionStore
 }));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);

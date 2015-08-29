@@ -26,7 +26,7 @@ wehatsigserver(router);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	console.log(req.session);
+	//console.log(req.session);
 	Post.getAll(null, function(err, posts){
 		if(err){
 			posts = [];
@@ -43,8 +43,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/l', function(req, res){
-		//console.log(req.url);
-		//console.log(req.method);
+		//console.log(req.session.user);
 		req.url = '/';
 		Post.getLastAll(null, function(err, posts){
 			if(err){
@@ -190,7 +189,7 @@ router.post('/reg', function(req, res){
 			}
 			req.session.user = user;//用户信息存入session
 			req.flash('success', '注册成功');
-			res.redirect('/login');//注册成功后返回主页
+			res.redirect('/');//注册成功后返回主页
 		});
 	});
 });
