@@ -75,34 +75,38 @@
     <!-- Page Content -->
     <div class="container">
 
-    	<div>
-    		<a><%= post.title %></a>
+    	<div class="text-center" style="margin-top: 5em;">
+    		<h3><%= post.title %></h3>
     	</div>
 
-    	<ul id="stickbtns" class="list-inline navbar-static-top">
+    	<ul id="stickbtns" class="list-inline">
 			<li>
 				<% if (user) { %>
-				<a class="btn btn-primary btn-lg" href="javascript:shareIndAppear();" role="button" style="background-color:rgba(100,150,200,0.5)">
-					<img src="https://mmbiz.qlogo.cn/mmbiz/vV3bdMHsLIjY2s0npKT0FaJ6iaC1MaiciakIHMqX6tb7127kicbBd5vIZcey4wenREiaEe8YXshOWpFcIser6AgbsEA/0" width="20em" height="20em" />
+				<a class="btn btn-success" href="javascript:shareIndAppear();" role="button">
+					<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
 					微信分享赚外快
 				</a>
 				<% } else { %>
-				<a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-whatever="share" role="button" style="background-color:rgba(100,150,200,0.5)">
-					<img src="https://mmbiz.qlogo.cn/mmbiz/vV3bdMHsLIjY2s0npKT0FaJ6iaC1MaiciakIHMqX6tb7127kicbBd5vIZcey4wenREiaEe8YXshOWpFcIser6AgbsEA/0" width="20em" height="20em" />
+				<a class="btn btn-success" data-toggle="modal" data-target="#myModal" data-whatever="share" role="button">
+					<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
 					微信分享赚外快
 				</a>
 				<% } %>
 			</li>
 			<li>
 				<% if (user) { %>
-				<a class="btn btn-primary btn-lg" href="/sendresumesimple/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>/<%= user.name%>" role="button" style="background-color:rgba(0,255,0,0.5)">自己投简历</a>
+				<a class="btn btn-info" href="/sendresumesimple/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>/<%= user.name%>" role="button">
+					<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+					自己投简历</a>
 				<% } else { %>
-				<a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-whatever="send" role="button" style="background-color:rgba(0,255,0,0.5)">自己投简历</a>
+				<a class="btn btn-info" data-toggle="modal" data-target="#myModal" data-whatever="send" role="button">
+					<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+					自己投简历</a>
 				<% } %>
 			</li>
     	</ul>
 		<hr>
-		<div class="articalcontent">
+		<div>
 		<%- post.post %>
 		</div>
 	<hr>
