@@ -209,7 +209,6 @@ router.post('/login', function(req, res){
 	//生成密码md5值
 	var md5 = crypto.createHash('md5'),
 		password = md5.update(req.body.password).digest('hex');
-	//var password = req.body.password;
 	//检查用户名是否存在
 	User.get(req.body.name, function(err, user){
 		if(!user){
@@ -217,8 +216,8 @@ router.post('/login', function(req, res){
 			return res.redirect('/login');
 		}
 		//检查密码是否一致
-		console.log("user.password:"+user.password);
-		console.log(".password:"+password);
+		//console.log("user.password:"+user.password);
+		//console.log("input.password:"+password);
 		if(user.password != password){
 			req.flash('error', '密码错误！');
 			return res.redirect('/login');
@@ -576,10 +575,6 @@ router.post('/sendresumesimple/:name/:time/:title/:sharerid/:userid', function(r
 router.get('/notreg/share/:name/:time/:title/:sharerid', function(req, res){
 	if (!req.session.user){
 		//register with user's phone number
-		console.log(req.params.name);
-		console.log(req.params.time);
-		console.log(req.params.title);
-		console.log(req.params.sharerid);
 		res.render('wexplatformregister', {
 			title: '注册',
 			user: req.session.user,
@@ -595,7 +590,20 @@ router.get('/notreg/share/:name/:time/:title/:sharerid', function(req, res){
 
 //shareget handler
 router.get('/share/:name/:time/:title/:sharerid', function(req, res){
-	console.log(req.session);
+	console.log(req.params);
+	console.log(req.url);
+	if (req.query.num){
+		User.getFromPhoneNum(req.query.num, function(err, user)		{
+			if(!user){
+				console.log('can not find a user somewhere is wrong');
+			}
+
+			req.session.user = user;
+			console.log('get the user like this');
+			console.log(req.url.substr(0, req.url.indexOf('?')));
+			res.redirect(req.url.substr(0, req.url.indexOf('?')));
+		});
+	}
 
 	var share = new Share();
 	share.getShare(req.url, req.params.name, req.params.time, req.params.title,req.params.sharerid,function(err,post,sharer){

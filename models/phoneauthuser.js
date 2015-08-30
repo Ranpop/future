@@ -1,27 +1,19 @@
-var session = require('express-session');
+
 var User = require('../models/dbuser.js');
 
 exports.generateAuthCode = function(callback){
-	//++session.phonenum;
-	//++session.authcode;
-	//session.phonenum = phonenum;
-
 	var authCode=''; 
 	for(var i=0;i < 6;i++) 
 	{ 
 		authCode += Math.floor(Math.random()*10); 
 	} 
-	//session.authcode = authCode;
-	//console.log('session phonenum: ' + session.phonenum + ' authcode: '+authCode);
 	callback(authCode);
 };
 
 exports.storePhoneUser = function(phonenum, authCode, sessionAu, sessionPh, callback){
-	//++session.user;
-	//console.log('start auth: ');
-	//console.log(phonenum+' '+sessionPh+' '+authCode+' '+sessionAu);
+
 	if (phonenum != sessionPh || authCode != sessionAu){
-		return callback(null);
+		return callback(err);
 	}
 
 	var authUser = new User({
@@ -36,7 +28,7 @@ exports.storePhoneUser = function(phonenum, authCode, sessionAu, sessionPh, call
 			//用户存在，进入分享链条处理
 			console.log('用户存在，进入分享链条处理')
 			//session.user = user;
-			//console.log(session.user);
+			//console.log(user);
 			return callback(null, user);
 		}
 
@@ -54,6 +46,6 @@ exports.storePhoneUser = function(phonenum, authCode, sessionAu, sessionPh, call
 	});
 
 	//console.log(session);
-	callback(null);
+	//callback(null);
 };
 
