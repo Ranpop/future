@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <%
-var ifeditorexist = 1;
 var isloginpage = 0;
 %>
-<%- include header.html %>
-
+<head>
+<%- include ../components/header-common.html %>
+<%- include ../components/header-KindEditor.html %>
+</head>
 <body>
-<%-include global-navbar.html%>
+<%-include ../components/global-navbar.html%>
 
     <!-- Page Content -->
     <div class="container">
@@ -15,17 +16,16 @@ var isloginpage = 0;
         <div class="row">
 
             <!-- Blog Entries Column -->
-            <%-include imgpagecontainer.html%>
+            <%-include ../components/imgpagecontainer.html%>
             <!-- Blog Sidebar Widgets Column -->
             <div class="col-md-4">
-            <%-include blogsidebar.html%>
+            <%-include ../components/blogsidebar.html%>
             </div>
             </div>
             <hr>
-    <!-- Footer -->
-    <%-include footer.html%>
-
     </div>
+    <!-- Footer -->
+    <%-include ../components/footer.html%>
     <!-- jQuery -->
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->

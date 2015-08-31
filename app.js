@@ -19,7 +19,7 @@ var mySessionStore = new MongoStore({db:settings.db});
 sessionSocket.setSessionParms(myCookieParse, mySessionStore, settings.db);
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views/renderpages'));
 //app.set('view engine', 'ejs');
 app.engine('.html', ejs.__express);
 app.set('view engine', 'html');

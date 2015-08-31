@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<%- include ../components/header-common.html %>
+</head>
+<body>
+<% posts.forEach(function(tag, index) { %>
+<a class="tag" href="/blog/tags/<%= tag %>"><%= tag %></a>
+<% }) %>
+<%- include ../components/footer.html %>
+</body>

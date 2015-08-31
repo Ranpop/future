@@ -1,6 +1,13 @@
-<%- include header.html %>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<%- include ../components/header-common.html %>
+</head>
+<body>
 <form method='post' action='/upload' enctype='multipart/form-data'>
 	<input type="file" name='file1' /><br>
 	<input type="submit" value="提交"/>
 </form>
-<%- include footer.html %>
+<%- include ../components/footer.html %>
+</body>
