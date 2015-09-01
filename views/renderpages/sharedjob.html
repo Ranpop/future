@@ -89,6 +89,12 @@
 					自己投简历</a>
 				<% } %>
 			</li>
+			<li class="pull-right">
+				<a class="btn btn-warning" href="/sendresumesimple/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>/<%= user.name%>" role="button">
+					查看更多职位
+					<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+				</a>
+			</li>
     	</ul>
 		<hr>
 		<div>
@@ -98,9 +104,6 @@
 
     </div>
 
-    <!-- Footer -->
-	<%-include ../components/footer.html%>
-    <!-- jQuery -->
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
