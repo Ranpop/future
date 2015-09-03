@@ -152,6 +152,7 @@ router.get('/reg', function(req, res){
 
 router.post('/reg', checkNotLogin);
 router.post('/reg', function(req, res){
+	console.log("req is ",req.body);
 	//console.log("open database1.0");
 	//var	User = require('../models/dbuser.js');
 	var name = req.body.name,
@@ -173,7 +174,8 @@ router.post('/reg', function(req, res){
 		name: req.body.name,
 		password: password,
 		email: req.body.email,
-		phonenum: phonenum
+		phonenum: phonenum,
+		ishr: req.body.ishr
 	});
 	//检查用户名是否存在
 	User.get(newUser.name, function(err, user){
@@ -340,6 +342,7 @@ router.get('/blog/search', function(req, res){
 	});
 });
 
+//get the user's space
 router.get('/u/:name', function(req, res){
 	//检查用户名是否存在
 	User.get(req.params.name, function(err, user){
@@ -353,7 +356,11 @@ router.get('/u/:name', function(req, res){
 				req.flash('error', err);
 				return res.redirect('/');
 			}
-			res.render('user', {
+			var renderpage = "intuser";
+			if(user.ishr == "yes"){
+				renderpage = "hruser"
+			}
+			res.render(renderpage, {
 				title: user.name,
 				posts: posts,
 				user: req.session.user,

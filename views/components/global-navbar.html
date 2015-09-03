@@ -18,27 +18,38 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="http://112.74.75.39:3000" target="_blank">关于未来</a>
+                        <a href="/" target="_blank">首页</a>
                     </li>
+                    <!--
                     <li>
-                        <a class="dropdown" data-toggle="dropdown" href="">服务
+                        <a class="dropdown" data-toggle="dropdown" href="">职位
                             <span class="caret"></span>
                           <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><a href="#">开放接口</a></li>
-                            <li><a href="#">开发指南</a></li>
+                            <li><a href="#">互联网</a></li>
+                            <li><a href="#">物联网</a></li>
+                            <li><a href="#">手机终端</a></li>
                           </ul>
                         </a>
+                    </li>-->
+                    <li>
+                        <a href="/blog" >职位</a>
                     </li>
                     <li>
-                        <a href="/blog" >社区</a>
+                        <a href="http://112.74.75.39:3000" >社区</a>
                     </li>
                     <% if (user) { %>
-                    <li>
+                    <!--<li>
                         <a href="/post">发表文章</a>
+                    </li>-->
+                    <li>
+                        <a href="/u/<%= user.name %>">
+                        <% if (user.ishr == "yes") { %>
+                        HR-
+                        <%}else{%>
+                        应聘者-
+                        <% } %>
+                            <%= user.name %>的空间</a>
                     </li>
-                    <li id="usertitle">
-                        <a href="/u/<%= user.name %>"><%= user.name %>的空间</a>
-                    </li>    
                     <li>
                         <a href="/logout">退出</a>
                     </li>             

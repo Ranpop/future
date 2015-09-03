@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<%
+var isloginpage = 0;
+%>
+<head>
+<%- include ../components/header-common.html %>
+</head>
+<body>
+<%-include ../components/global-navbar.html%>
+
+    <!-- Page Content -->
+    <div class="container" style="margin-top:8em;">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">您提交的简历</div>
+                    <div class="panel-body">
+                        <p>you can check them here...</p>
+                        <!-- Table -->
+                        <table class="table table-hover table-condensed col-md-8">
+                        <% var count = 0 %>
+                        <% posts.forEach(function(post, index) { %>
+                        <% if(count >= 5) { %>
+                        <% return; %>
+                        <% } else { %>
+                        <tr>
+                        <td><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></td>
+                        <td><a href="/u/<%= post.name %>"><%= post.name %></a></td>
+                        <td>提交于<%= post.time.minute %></td>
+                        </tr>
+                        <% count = count + 1; %>
+                        <% } %>
+                        <% }) %>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">个人信息管理</div>
+                    <div class="panel-body">
+                    <p>//to do...</p>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">分红信息管理</div>
+                    <div class="panel-body">
+                    <p>//to do...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <hr>
+    </div>
+    <!-- Footer -->
+    <%-include ../components/footer.html%>
+    <!-- jQuery -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

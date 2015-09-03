@@ -1,35 +1,43 @@
             <!-- Blog Entries Column -->
             <div class="col-md-8">
-                <ul id="myTabs" class="nav nav-tabs" role="tablist">
-                  <li role="presentation" class="active"><a href="#Allposts" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">所有内容</a></li>
-                  <li role="presentation"><a href="#wanderfulposts" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile">精华内容</a></li>
-                </ul>
                 <!-- First Blog Post -->
-                <div role="tabpanel" class="tab-pane fade in active" id="Allposts" aria-labelledBy="home-tab">
-                <table class="table table-hover table-condensed">
-                <% var count = 0 %>
-                <% posts.forEach(function(post, index) { %>
-                <% if(count >= 20) { %>
-                <% return; %>
-                <% } else { %>
-                    <tr>
-                        <td><p><a href="/u/<%= post.name %>"><%= post.name %></a></p></td>
-                        <td>
-                          <h4><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></h4>
-                          <p>发表于<%= post.time.minute %> <%= post.pv %>浏览 <%= post.comments.length %>回复</p>
-                        <% if((user)&&(user.name == 'ranpop')) { %>
-                            <a href="/remove/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">删除</a>
-                        <% } %>
-                        </td>    
-                    </tr>
-                <% count = count + 1; %>
-                <% } %>
-                <% }) %>
-                </table>
-                <!-- Pager -->
+                <div class="text-center" style="margin-top:3em;">
+                    <form class="form-inline" action="/blog/search" method="post">
+                      <lable>
+                      <span class="glyphicon glyphicon-search"></span>
+                      <input type="text" class="form-control" placeholder="请输入要查找职位关键字" name="searchword">
+                      </lable>
+                        <button type="submit" class="btn btn-primary">搜索</button>
+                    </form>
                 </div>
-                  <div role="tabpanel" class="tab-pane fade" id="wanderfulposts" aria-labelledBy="profile-tab">
-                  </div>
+
+                <div class="panel panel-default" style="margin-top:3em;">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">共为您找到 N 职位</div>
+                    <div class="panel-body">
+                        <!-- Table -->
+                        <table class="table table-hover table-condensed">
+                        <% var count = 0 %>
+                        <% posts.forEach(function(post, index) { %>
+                        <% if(count >= 20) { %>
+                        <% return; %>
+                        <% } else { %>
+                            <tr>
+                                <td><p><a href="/u/<%= post.name %>"><%= post.name %></a></p></td>
+                                <td>
+                                  <h4><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></h4>
+                                  <p>发表于<%= post.time.minute %> <%= post.pv %>浏览 <%= post.comments.length %>回复</p>
+                                <% if((user)&&(user.name == 'ranpop')) { %>
+                                    <a href="/remove/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">删除</a>
+                                <% } %>
+                                </td>    
+                            </tr>
+                        <% count = count + 1; %>
+                        <% } %>
+                        <% }) %>
+                        </table>
+                    </div>
+                </div>
                 <hr>
                 <nav>
                   <ul class="pagination">
