@@ -7,6 +7,7 @@ var User = require('../models/dbuser.js');
 var phoneAuth = require('../models/phoneauthuser.js');
 var Post = require('../models/post.js');
 var Jobs = require('../models/dbjobs.js');
+var ShareChain = require('../models/sharechain.js');
 var router = express.Router();
 var Comment = require('../models/comment.js');
 var Share = require('../models/share.js');
@@ -284,9 +285,7 @@ router.get('/post', function(req, res){
 
 router.post('/post', checkLogin);
 router.post('/post', function(req, res){
-	//console.log(req.body.brief);
-	//console.log(req.body);
-	//console.log(req.body.qrcode);
+
 	var titlesrc = req.body.title;
 	var title = titlesrc.replace(/(^\s*)|(\s*$)/g, "");  //去除前后空格
 	var currentUser = req.session.user,
@@ -601,10 +600,24 @@ router.post('/wechat', Wechat(config, function (req, res, next) {
 	//shareset handler
 router.get('/share/:publisher/:jobname/:sharerid/:sid', checkLogin);
 router.get('/share/:publisher/:jobname/:sharerid/:sid', function(req, res){
-	console.log(req.url);
+	var newShare = new ShareChain(req.params.publisher,req.params.jobname);
+	ShareChain.getShare(newShare.name, newShare.title, function(err, sharechain){
+		if(sharechain){
+			console.log('sharechain have stroe');
+			ShareChain.calcShareChain(sharechain, req.session.user, function(sharechain){
+
+			});
+		}
+		else{
+			newShare.save(function(err, user){
+				if(err){
+					console.log('store is not ok');
+				}
+				console.log('store is ok');
+			});
+		}
+	});
 	var share = new Share();
-	//console.log('derek mark index js');
-	console.log(req.url);
 	share.setShare(req.url, req.params.sid,function(err,sharedurlqrcode){
 		if(err){
 			console.log('share fail...');
