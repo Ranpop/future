@@ -20,19 +20,6 @@ var isloginpage = 0;
                         <p>you can check them here...</p>
                         <!-- Table -->
                         <table class="table table-hover table-condensed col-md-8">
-                        <% var count = 0 %>
-                        <% posts.forEach(function(post, index) { %>
-                        <% if(count >= 5) { %>
-                        <% return; %>
-                        <% } else { %>
-                        <tr>
-                        <td><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></td>
-                        <td><a href="/u/<%= post.name %>"><%= post.name %></a></td>
-                        <td>提交于<%= post.time.minute %></td>
-                        </tr>
-                        <% count = count + 1; %>
-                        <% } %>
-                        <% }) %>
                         </table>
                     </div>
                 </div>
