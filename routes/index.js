@@ -665,6 +665,7 @@ router.get('/notreg/share/:name/:time/:title/:sharerid', function(req, res){
 router.get('/share/:publisher/:jobname/:sharerid', function(req, res){
 	console.log(req.params);
 	console.log(req.url);
+	console.log('share wwwwww');
 	if (req.query.num){
 		User.getFromPhoneNum(req.query.num, function(err, user)		{
 			if(!user){
@@ -679,7 +680,7 @@ router.get('/share/:publisher/:jobname/:sharerid', function(req, res){
 			res.redirect(req.url.substr(0, req.url.indexOf('?')));
 		});
 	}
-
+	console.log('share ffffff');
 	var share = new Share();
 	share.getShare(req.params.publisher, req.params.jobname, req.params.sharerid,function(err,job,sharer){
 		if(err){
@@ -687,8 +688,10 @@ router.get('/share/:publisher/:jobname/:sharerid', function(req, res){
 			//res.redirect('https://www.baidu.com/search/error.html');
 			return;
 		}
+		console.log('share bbbbb');
 		//get ok
 		res.render('sharedjob',{
+			title: req.params.jobname,
 			user: req.session.user,
 			sharer: sharer,
 			job: job,
