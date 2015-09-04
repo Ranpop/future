@@ -1,4 +1,4 @@
-var Post = require('../models/post.js');
+var Jobs = require('../models/dbjobs.js');
 var	User = require('../models/dbuser.js');
 var Qrcode = require('qrcode');
 //var markdown = require('markdown').markdown;
@@ -47,10 +47,10 @@ function ShareToOtherPlatform(url, sid, callback){
 }
 
 
-function GetSharedArticle(url, name, time, title, sharerid, callback){
-	//get post
+function GetSharedArticle(publisher, jobname, sharerid, callback){
+	//get Jobs
 	var err;
-	Post.getOne(name,time,title,function(err,doc){
+	Jobs.getOne(publisher,jobname,function(err,doc){
 		if(err){
 			console.log('get failed')
 			return callback(err);

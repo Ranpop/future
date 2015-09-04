@@ -44,12 +44,11 @@ function confirmauthcodejs() {
     	document.getElementById("confirmno").value);
 }
 
-function addnewsharerjs(newsharer,presharer,postname,posttime,posttitle) {
+function addnewsharerjs(newsharer,presharer,publisher,jobname) {
 	console.log('informthenewsharer: ' + newsharer + ':' + presharer);
     socket.emit('addnewshare_req',  {'newsharerid':newsharer,
     								'presharerid':presharer,
-    								'post':{'name':postname,
-    										'time':posttime,
-    										'title':posttitle}});
+    								'job':{'publisher':publisher,
+    										'jobname':jobname}});
 }
 

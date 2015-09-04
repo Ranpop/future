@@ -13,24 +13,23 @@
 
                 <div class="panel panel-default" style="margin-top:3em;">
                     <!-- Default panel contents -->
-                    <div class="panel-heading">共为您找到 N 职位</div>
+                    <div class="panel-heading">共为您找到 <% jobs.length %> 个职位</div>
                     <div class="panel-body">
                         <!-- Table -->
                         <table class="table table-hover table-condensed">
                         <% var count = 0 %>
-                        <% posts.forEach(function(post, index) { %>
+                        <% jobs.forEach(function(job, index) { %>
                         <% if(count >= 20) { %>
                         <% return; %>
                         <% } else { %>
+                            
                             <tr>
-                                <td><p><a href="/u/<%= post.name %>"><%= post.name %></a></p></td>
+                                <td><a href="/getonejob/<%= job.publisher %>/<%= job.jobname %>/"><%= job.jobname %></a></td>
                                 <td>
-                                  <h4><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></h4>
-                                  <p>发表于<%= post.time.minute %> <%= post.pv %>浏览 <%= post.comments.length %>回复</p>
-                                <% if((user)&&(user.name == 'ranpop')) { %>
-                                    <a href="/remove/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">删除</a>
-                                <% } %>
-                                </td>    
+                                  <h4><%= job.publisher %></h4>
+                                  <p>发布于<%= job.time.minute %></p>
+                                </td>
+                                <td>基本年薪 <%= job.jobsalary %></td>
                             </tr>
                         <% count = count + 1; %>
                         <% } %>

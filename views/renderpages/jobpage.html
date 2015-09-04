@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<%
+var isloginpage = 0;
+%>
+<head>
+<%- include ../components/header-common.html %>
+<%- include ../components/header-KindEditor.html %>
+</head>
+<body>
+<%-include ../components/global-navbar.html%>
+
+    <!-- Page Content -->
+    <div class="container" style="margin-top: 5em;">
+    	<div class="text-center">
+    		<h3><%= job.jobname %></h3>
+    	</div>
+    <% if (user) { %>
+    	<ul class="list-inline"  style="margin-top: 5em;">
+    		<li><a class="btn btn-success" href="/share/<%= job.publisher %>/<%= job.jobname %>/<%= user.name %>/0">微信分享</a></li>
+    		<li><a class="btn btn-info" href="http://v.t.sina.com.cn/share/share.php?appkey=1962120590&url=http%3A%2F%2Fv.youku.com%2Fv_show%2Fid_XMTI3NjQxNjIwOA%3D%3D.html&title=%E3%80%90%E8%A7%86%E9%A2%91%EF%BC%9A%5B0703%5D%E5%A4%A7%E5%AD%A6%E7%94%9F%E9%9B%87%E4%BA%BA%E4%B8%8A%E8%AF%BE%E6%88%90%E9%A3%8E+%E4%BD%A0%E6%9C%80%E6%83%B3%E5%88%AB%E4%BA%BA%E6%9B%BF%E4%BD%A0%E5%81%9A%E4%BB%80%E4%B9%88%3F%E3%80%91&ralateUid=1642904381&source=%E4%BC%98%E9%85%B7%E7%BD%91&sourceUrl=http%3A%2F%2Fwww.youku.com%2F&content=utf8&searchPic=false">微博分享</a></li>
+    	</ul>
+	<% } else { %>
+
+	<% } %>
+		<hr>
+	    <div class="panel panel-default">
+	        <!-- Default panel contents -->
+	        <div class="panel-heading">招聘信息</div>
+	        <div class="panel-body">
+		        <p><%-job.publisher %> 发布于 <%- job.time.minute %></p>
+				<div class="list-group">
+				  <a class="list-group-item">
+				    <h4 class="list-group-item-heading">年薪</h4>
+				    <p class="list-group-item-text"><%-job.jobsalary %></p>
+				  </a>
+				  <a class="list-group-item">
+				    <h4 class="list-group-item-heading">工作地点</h4>
+				    <p class="list-group-item-text"><%-job.joblocation %></p>
+				  </a>
+				  <a class="list-group-item">
+				    <h4 class="list-group-item-heading">福利保障</h4>
+				    <p class="list-group-item-text"><%-job.jobfuli %></p>
+				  </a>
+				  <a class="list-group-item">
+				    <h4 class="list-group-item-heading">要求</h4>
+				    <p class="list-group-item-text"><%-job.jobrequire %></p>
+				  </a>
+				  <a class="list-group-item">
+				    <h4 class="list-group-item-heading">其它</h4>
+				    <p class="list-group-item-text"><%-job.jobothers %></p>
+				  </a>
+				</div>
+	    	</div>
+		</div>
+
+    </div>
+    <!-- Footer -->
+	<%-include ../components/footer.html%>
+    <!-- jQuery -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!--stickup js-->
+    <script src="/bootstrap/dist/js/stickUp.min.js"></script>
+	<script type="text/javascript"> //initiating jQuery 
+	jQuery(function($) { $(document).ready( function() { 
+		//enabling stickUp on the '.navbar-wrapper' class 
+		$('.list-inline').stickUp({ 
+		//enabling marginTop with the 'auto' setting 
+		marginTop: 'auto' }); }); 
+	}); 
+	</script>
+</body>
+</html>

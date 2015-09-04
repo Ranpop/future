@@ -6,6 +6,7 @@ var express = require('express');
 var User = require('../models/dbuser.js');
 var phoneAuth = require('../models/phoneauthuser.js');
 var Post = require('../models/post.js');
+var Jobs = require('../models/dbjobs.js');
 var router = express.Router();
 var Comment = require('../models/comment.js');
 var Share = require('../models/share.js');
@@ -77,14 +78,14 @@ router.get('/linkedin', function(req, res){
 });
 	//app.get('/blog', checkNotLogin);
 router.get('/blog', function(req, res){
-	Post.getAll(null, function(err, posts){
+	Jobs.getAll(null, function(err, jobs){
 		if(err){
 			posts = [];
 		}
 		res.render('blog',{
 		    title: 'Future',
 			user: req.session.user,
-			posts: posts,
+			jobs: jobs,
 			success: req.flash('success').toString(),
 			error: req.flash('error').toString()
 		});
@@ -231,6 +232,46 @@ router.post('/login', function(req, res){
 	});
 });
 
+router.get('/postjob', checkLogin);
+router.get('/postjob', function(req, res){
+	res.render('postjob', {
+		title: '发布新职位',
+		user: req.session.user,
+		success: req.flash('success').toString(),
+		error: req.flash('error').toString()
+	});
+});
+router.post('/postjob', checkLogin);
+router.post('/postjob', function(req, res){
+	var jobnamesrc = req.body.jobname;
+	var jobname = jobnamesrc.replace(/(^\s*)|(\s*$)/g, "");  //去除前后空格
+	console.log("[derek debug]-" + jobname + ' ' + req.body.jobsalary + ' ' + req.body.joblocation + ' ' + req.body.jobfuli + ' ' + req.body.jobrequire + ' ' + req.body.jobothers);
+	var currentUser = req.session.user;
+
+	console.log("[derek debug]-2-" + ' ' + currentUser.name + ' ' + jobname + ' ' + req.body.jobsalary + ' ' + req.body.joblocation + ' ' + req.body.jobfuli + ' ' + req.body.jobrequire + ' ' + req.body.jobothers);
+	var job = new Jobs(
+	{
+		publisher: currentUser.name,
+		jobname: jobname,
+		jobsalary: req.body.jobsalary,
+		joblocation: req.body.joblocation,
+		jobfuli: req.body.jobfuli,
+		jobrequire: req.body.jobrequire,
+		jobothers: req.body.jobothers
+	});
+	console.log("[derek debug]-3");
+	job.save(function(err){
+		if(err){
+			req.flash('error', err);
+			return res.redirect('/');
+		}
+		req.flash('success', '发布成功！');
+		res.redirect('/u/' + currentUser.name);
+	});
+});
+
+
+
 router.get('/post', checkLogin);
 router.get('/post', function(req, res){
 	res.render('post', {
@@ -350,23 +391,48 @@ router.get('/u/:name', function(req, res){
 			req.flash('error', '用户不存在');
 			return res.redirect('/');
 		}
-		//查询并返回该用户所有文章
-		Post.getAll(user.name, function(err, posts){
-			if(err){
-				req.flash('error', err);
-				return res.redirect('/');
-			}
-			var renderpage = "intuser";
-			if(user.ishr == "yes"){
-				renderpage = "hruser"
-			}
-			res.render(renderpage, {
-				title: user.name,
-				posts: posts,
-				user: req.session.user,
-				success: req.flash('success').toString(),
-				error:req.flash('error').toString()
+
+		if(user.ishr == "yes"){
+			//查询并返回该用户所有文章
+			Jobs.getAll(user.name, function(err, jobs){
+				if(err){
+					req.flash('error', err);
+					return res.redirect('/');
+				}
+				
+				res.render("hruser", {
+					title: user.name,
+					jobs: jobs,
+					user: req.session.user,
+					success: req.flash('success').toString(),
+					error:req.flash('error').toString()
+				});
 			});
+		}
+		else{
+				res.render("intuser", {
+					title: user.name,
+					user: req.session.user,
+					success: req.flash('success').toString(),
+					error:req.flash('error').toString()
+				});
+		}
+	});
+});
+
+router.get('/getonejob/:publisher/:jobname', function(req, res){
+	Jobs.getOne(req.params.publisher, req.params.jobname, function(err, job){
+		if(err){
+			req.flash('error', err);
+			return res.redirect('/');
+		}
+		console.log('pv test ok 1');
+		res.render('jobpage', {
+			title: req.params.jobname,
+			job: job,
+			user: req.session.user,
+			success: req.flash('success').toString(),
+			error:req.flash('error').toString()
 		});
 	});
 });
@@ -409,7 +475,7 @@ router.post('/u/:name/:day/:title', function(req, res){
 		res.redirect('back');
 	});
 });
-	
+
 router.get('/edit/:name/:day/:title', checkLogin);
 router.get('/edit/:name/:day/:title', function(req, res){
 	var currentUser = req.session.user;
@@ -533,8 +599,8 @@ router.post('/wechat', Wechat(config, function (req, res, next) {
 }));
 
 	//shareset handler
-router.get('/share/:name/:time/:title/:sharerid/:sid', checkLogin);
-router.get('/share/:name/:time/:title/:sharerid/:sid', function(req, res){
+router.get('/share/:publisher/:jobname/:sharerid/:sid', checkLogin);
+router.get('/share/:publisher/:jobname/:sharerid/:sid', function(req, res){
 	console.log(req.url);
 	var share = new Share();
 	//console.log('derek mark index js');
@@ -547,6 +613,7 @@ router.get('/share/:name/:time/:title/:sharerid/:sid', function(req, res){
 		}
 		console.log('share success...');
 		res.render('sharescan',{
+		title: "请扫描二维码分享",
 		qrcode: sharedurlqrcode,
 		success: req.flash('success').toString(),
 		error: req.flash('error').toString()
@@ -555,14 +622,13 @@ router.get('/share/:name/:time/:title/:sharerid/:sid', function(req, res){
 	});
 });	
 
-router.get('/sendresumesimple/:name/:time/:title/:sharerid/:userid', function(req, res){
+router.get('/sendresumesimple/:publisher/:jobname/:sharerid/:userid', function(req, res){
 		//register with user's phone number
 		res.render('sendresumesimple', {
 			title: 'sendresumesimple',
 			user: req.params.userid,
-			paramsname: req.params.name,
-			paramstime: req.params.time,
-			paramstitle: req.params.title,
+			paramspublisher: req.params.publisher,
+			paramsjobname: req.params.jobname,
 			paramssharedid: req.params.sharerid,
 			success: req.flash('success').toString(),
 			error: req.flash('error').toString()
@@ -596,13 +662,15 @@ router.get('/notreg/share/:name/:time/:title/:sharerid', function(req, res){
 	}});
 
 //shareget handler
-router.get('/share/:name/:time/:title/:sharerid', function(req, res){
+router.get('/share/:publisher/:jobname/:sharerid', function(req, res){
 	console.log(req.params);
 	console.log(req.url);
 	if (req.query.num){
 		User.getFromPhoneNum(req.query.num, function(err, user)		{
 			if(!user){
 				console.log('can not find a user somewhere is wrong');
+				res.redirect('https://www.baidu.com/search/error.html');
+				return;
 			}
 
 			req.session.user = user;
@@ -613,7 +681,7 @@ router.get('/share/:name/:time/:title/:sharerid', function(req, res){
 	}
 
 	var share = new Share();
-	share.getShare(req.url, req.params.name, req.params.time, req.params.title,req.params.sharerid,function(err,post,sharer){
+	share.getShare(req.params.publisher, req.params.jobname, req.params.sharerid,function(err,job,sharer){
 		if(err){
 			console.log('share fail...');
 			//res.redirect('https://www.baidu.com/search/error.html');
@@ -623,7 +691,7 @@ router.get('/share/:name/:time/:title/:sharerid', function(req, res){
 		res.render('sharedjob',{
 			user: req.session.user,
 			sharer: sharer,
-			post: post,
+			job: job,
 			success: req.flash('success').toString(),
 			error: req.flash('error').toString()
 		});	

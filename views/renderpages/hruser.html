@@ -17,18 +17,18 @@ var isloginpage = 0;
                     <!-- Default panel contents -->
                     <div class="panel-heading">您收到的简历</div>
                     <div class="panel-body">
-                        <p>you can check them here...</p>
                         <!-- Table -->
                         <table class="table table-hover table-condensed col-md-8">
                         <% var count = 0 %>
-                        <% posts.forEach(function(post, index) { %>
+                        <% jobs.forEach(function(job, index) { %>
                         <% if(count >= 5) { %>
                         <% return; %>
                         <% } else { %>
                         <tr>
-                        <td><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></td>
-                        <td><a href="/u/<%= post.name %>"><%= post.name %></a></td>
-                        <td>提交于<%= post.time.minute %></td>
+                        <td><a href="/getonejob/<%= job.publisher %>/<%= job.jobname %>/"><%= job.jobname %></a></td>
+                        <td>提交于<%= job.time.minute %></td>
+                        <td><%= job.jobsalary %> 人传递了该信息</td>
+                        <td><a class="btn btn-warning btn-sm" href="/postjob">申请关闭</a></td>
                         </tr>
                         <% count = count + 1; %>
                         <% } %>
@@ -41,18 +41,18 @@ var isloginpage = 0;
                     <!-- Default panel contents -->
                     <div class="panel-heading">您发布的招聘信息</div>
                     <div class="panel-body">
-                        <p>you can check them here...</p>
                         <!-- Table -->
                         <table class="table table-hover table-condensed col-md-8">
                         <% var count = 0 %>
-                        <% posts.forEach(function(post, index) { %>
+                        <% jobs.forEach(function(job, index) { %>
                         <% if(count >= 5) { %>
                         <% return; %>
                         <% } else { %>
                         <tr>
-                        <td><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></td>
-                        <td><a href="/u/<%= post.name %>"><%= post.name %></a></td>
-                        <td>提交于<%= post.time.minute %></td>
+                        <td><a href="/getonejob/<%= job.publisher %>/<%= job.jobname %>/"><%= job.jobname %></a></td>
+                        <td>提交于<%= job.time.minute %></td>
+                        <td><%= job.jobsalary %> 人传递了该信息</td>
+                        <td><a class="btn btn-warning btn-sm" href="/postjob">申请关闭</a></td>
                         </tr>
                         <% count = count + 1; %>
                         <% } %>
@@ -61,19 +61,9 @@ var isloginpage = 0;
                     </div>
                 </div>
 
-
-
-                
             </div>
             <div class="col-md-4">
-                <div class="panel panel-default">
-                    <!-- Default panel contents -->
-                    <div class="panel-heading">招聘信息管理</div>
-                    <div class="panel-body">
-                    <a class="btn btn-success" href="/post">发布招聘信息</a>
-                    </div>
-                </div>
-
+                <%-include ../components/usersidebar.html%>
             </div>
         </div>
     <hr>

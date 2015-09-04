@@ -61,7 +61,7 @@
     <div class="container">
 
     	<div class="text-center" style="margin-top: 5em;">
-    		<h3><%= post.title %></h3>
+    		<h3><%= job.jobname %></h3>
     	</div>
 
     	<ul id="stickbtns" class="list-inline">
@@ -80,7 +80,7 @@
 			</li>
 			<li>
 				<% if (user) { %>
-				<a class="btn btn-info" href="/sendresumesimple/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>/<%= user.name%>" role="button">
+				<a class="btn btn-info" href="/sendresumesimple/<%= job.publisher %>/<%= job.jobname %>/<%= sharer%>/<%= user.name%>" role="button">
 					<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
 					自己投简历</a>
 				<% } else { %>
@@ -103,10 +103,38 @@
 			</li>
     	</ul>
 		<hr>
-		<div>
-		<%- post.post %>
-		</div>
-	<hr>
+
+
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">招聘信息</div>
+        <div class="panel-body">
+	        <p><%-job.publisher %> 发布于 <%- job.time.minute %></p>
+			<div class="list-group">
+			  <a class="list-group-item">
+			    <h4 class="list-group-item-heading">年薪</h4>
+			    <p class="list-group-item-text"><%-job.jobsalary %></p>
+			  </a>
+			  <a class="list-group-item">
+			    <h4 class="list-group-item-heading">工作地点</h4>
+			    <p class="list-group-item-text"><%-job.joblocation %></p>
+			  </a>
+			  <a class="list-group-item">
+			    <h4 class="list-group-item-heading">福利保障</h4>
+			    <p class="list-group-item-text"><%-job.jobfuli %></p>
+			  </a>
+			  <a class="list-group-item">
+			    <h4 class="list-group-item-heading">要求</h4>
+			    <p class="list-group-item-text"><%-job.jobrequire %></p>
+			  </a>
+			  <a class="list-group-item">
+			    <h4 class="list-group-item-heading">其它</h4>
+			    <p class="list-group-item-text"><%-job.jobothers %></p>
+			  </a>
+			</div>
+    	</div>
+	</div>
+
 
     </div>
 
@@ -146,7 +174,7 @@
 			 <% if (user) { %>
 			 	user_phoneno = '<%= user.name%>';
 			 <% } %>
-			 addnewsharerjs(user_phoneno,'<%= sharer%>','<%= post.name %>','<%= post.time.day %>','<%= post.title %>');		
+			 addnewsharerjs(user_phoneno,'<%= sharer%>','<%= job.publisher %>','<%= job.jobname %>');		
 	}
 	function shareIndDisappear(){
 		console.log('shareIndDisappear');
@@ -156,8 +184,8 @@
 		$('#myModal').modal('hide');
 	}
 	function getsendresumesimply(){
-		console.log('/sendresumesimple/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>/' + user_phoneno);
-		window.location.href = '/sendresumesimple/<%= post.name %>/<%= post.time.day %>/<%= post.title %>/<%= sharer%>/' + user_phoneno;
+		console.log('/sendresumesimple/<%= job.publisher %>/<%= job.jobname %>/<%= sharer%>/' + user_phoneno);
+		window.location.href = '/sendresumesimple/<%= job.publisher %>/<%= job.jobname %>/<%= sharer%>/' + user_phoneno;
 	}
 	</script>
 </body>
