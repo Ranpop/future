@@ -702,100 +702,6 @@ router.get('/share/:publisher/:jobname/:sharerid', function(req, res){
 
 });	
 
-router.post('/share/:name/:time/:title/:sharerid', function(req, res){
-	if (req.body.authbtn){
-		console.log(req.body.authbtn);
-		var authcode="";
-		for (var i=0; i<6; i++){
-			var id = Math.round(Math.random()*10);
-         	authcode += id;
-		}
-		var md5 = crypto.createHash('md5'),
-			password = md5.update('123456').digest('hex');
-		console.log(authcode);
-		var newUser = new User({
-			name: req.body.name,
-			password: password,
-			email: "",
-			authcode: authcode
-		});
-
-		User.get(newUser.name, function(err, user){
-			if(user){
-				req.flash('error', '用户已经存在!');
-				//return res.redirect('/reg');//返回注册页
-			}
-			//如果用户不存在则新增用户
-			newUser.save(function(err, user){
-				if(err){
-					req.flash('error', 'err');
-					//return res.redirect('/reg');  
-				}
-				//req.session.user = user;//用户信息存入session
-				//req.flash('success', '注册成功');
-				console.log("open save number ok");
-			});
-		});
-
-		console.log(req.body.paramsname);
-		console.log(req.body.paramstime);
-		console.log(req.body.paramstitle);
-		console.log(req.body.paramssharedid);
-
-		res.render('wexplatformregister', {
-			title: '注册',
-			user: newUser,
-			authcode: authcode,
-			paramsname: req.body.paramsname,
-			paramstime: req.body.paramstime,
-			paramstitle: req.body.paramstitle,
-			paramssharedid: req.body.paramssharedid,
-			success: req.flash('success').toString(),
-			error: req.flash('error').toString()
-		});
-	}
-	else if (req.body.login){
-		console.log(req.body.login);
-
-	    var authcode = req.body.authcode;
-		User.get(req.body.name, function(err, user){
-			if(!user){
-				req.flash('error', '用户名不存在');
-				return res.redirect(req.url);
-			}
-		
-			if(user.authcode != authcode){
-				req.flash('error', '验证码错误');
-				return res.redirect(req.url);
-			}
-			//用户名密码都匹配后，将用户信息存入session
-			req.session.user = user;
-			//req.flash('success', '登陆成功');
-		});
-
-		console.log(req.body.paramsname);
-		console.log(req.body.paramstime);
-		console.log(req.body.paramstitle);
-		console.log(req.body.paramssharedid);
-		var share = new Share();
-		share.getShare(req.url ,req.body.paramsname,req.body.paramstime,req.body.paramstitle,req.body.paramssharedid,function(err,post,sharer,qrcode){
-			if(err){
-				console.log('share fail...');
-				res.redirect('https://www.baidu.com/search/error.html');
-				return;
-			}
-			//get ok
-			res.render('sharedjob',{
-				sharer: sharer,
-				post: post,
-				qrcode: qrcode,
-				success: req.flash('success').toString(),
-				error: req.flash('error').toString()
-			});	
-		});
-	}
-});
-
 //sendresume handler
 router.get('/sendresumereq/:name/:time/:title/:sharerid', function(req, res){
 	//console.log('sharegetreq derek mark index js');
@@ -818,11 +724,10 @@ router.get('/sendresumereq/:name/:time/:title/:sharerid', function(req, res){
 });	
 
 //test wxapi
-router.get('/sendphtoresume/:name/:time/:title/:sharerid/:userid', function(req, res){
+router.get('/sendphtoresume/:publisher/:jobname/:sharerid/:userid', function(req, res){
 			res.render('sendphtoresume',{
-				postwritername: req.params.name,
-				postwritetime: req.params.time,
-				postwritetitle: req.params.title,
+				title: req.params.jobname,
+				publisher: req.params.publisher,
 				sharerid: req.params.sharerid,
 				userid: req.params.userid,
 				success: req.flash('success').toString(),
