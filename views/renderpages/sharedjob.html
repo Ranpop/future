@@ -64,7 +64,9 @@
     		<h3><%= job.jobname %></h3>
     	</div>
 
-    	<ul id="stickbtns" class="list-inline">
+<nav class="navbar navbar-default navbar-fixed-bottom">
+  <div class="container">
+    	<ul class="list-inline">
 			<li>
 				<% if (user) { %>
 				<a class="btn btn-success" href="javascript:shareIndAppear();" role="button">
@@ -102,6 +104,9 @@
 				</a>
 			</li>
     	</ul>
+  </div>
+</nav>
+
 		<hr>
 
 
@@ -141,18 +146,12 @@
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!--stickup js-->
-    <script src="/bootstrap/dist/js/stickUp.min.js"></script>
     <!-- Socket io JavaScript -->
     <script src="/bootstrap/dist/js/socket.io.js"></script>
     <!-- AuthCodeGen websocket JavaScript -->
     <script src="/bootstrap/dist/js/authcode-ws-client.js"></script>  
 
 	<script type="text/javascript"> //initiating jQuery 
-	jQuery(function($) { $(document).ready( function() { 
-		//enabling stickUp on the '.navbar-wrapper' class 
-		$('#stickbtns').stickUp(); }); 
-	});
 	$('#myModal').on('show.bs.modal', function (event) {
 	  var button = $(event.relatedTarget) // Button that triggered the modal
 	  shareorsend = button.data('whatever') // Extract info from data-* attributes
