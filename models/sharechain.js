@@ -167,9 +167,6 @@ ShareChain.addShareChain = function(sharechain, currentshare, isnew, count, call
 			}
 
 			if (isnew){
-				//var pathkey = '"'+sharechain.sharecount.toString()+'"';
-				var pathkey = "0";
-				console.log(pathkey);
 				collection.update({"name": name, "title":title}, {$push:{"sharepath":{"array":[currentshare.name]}}}, 
 					function(err){
 						//mongodb.close();
@@ -191,8 +188,6 @@ ShareChain.addShareChain = function(sharechain, currentshare, isnew, count, call
 				var pathkey = "sharepath" + "." + count.toString() + ".array";
 				var demo = {};
 				demo[pathkey] = currentshare.name;
-				console.log(demo);
-				console.log(pathkey);
 				collection.update({"name": name, "title":title}, {$push: demo}, 
 					function(err){
 						mongodb.close();
