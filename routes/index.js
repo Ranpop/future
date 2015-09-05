@@ -708,6 +708,25 @@ router.get('/share/:publisher/:jobname/:sharerid', function(req, res){
 		});
 	}
 	console.log('share ffffff');
+
+	var newShare = new ShareChain(req.params.publisher,req.params.jobname);
+	ShareChain.getShare(newShare.name, newShare.title, function(err, sharechain){
+		if(sharechain){
+			console.log('sharechain have stroe');
+			ShareChain.calcShareChain(sharechain, '2', req.session.user, function(sharechain){
+
+			});
+		}
+		else{
+			newShare.save(function(err, user){
+				if(err){
+					console.log('store is not ok');
+				}
+				console.log('store is ok');
+			});
+		}
+	});
+
 	var share = new Share();
 	share.getShare(req.params.publisher, req.params.jobname, req.params.sharerid,function(err,job,sharer){
 		if(err){
