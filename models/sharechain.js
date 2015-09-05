@@ -49,10 +49,6 @@ ShareChain.addShare = function(name, title, sharefather, sharecurrent, callback)
 				return callback(err);
 			}
 
-			//if (null == sharefather){
-			//	var pathkey = "one";
-			//	var pathvalue = new 
-			//}
 			collection.update({
 				"name": name,
 				"title": title
@@ -123,12 +119,95 @@ ShareChain.getShare = function(name, title, callback){
 	});
 };
 
-ShareChain.calcShareChain = function(sharechain, currentShare, callback){
-	if (0 == sharechain.sharecount){
-		ShareChain.addShare(sharechain.name, sharechain.title, null, currentShare, function(err){
+ShareChain.calcShareChain = function(sharechain, sharefather, currentShare, callback){
+	var isnew = false;
+	var count = sharechain.sharecount;
 
-		});
+	if (null == sharefather){
+		ShareChain.addShareChain(sharechain, currentShare, true, count, function(err){
+			if (err){
+				console.log('add share failed');
+				return callback(err);
+			}
+		});	
 	}
+	else{
+		for (var i=0; i < sharechain.sharecount; i++){
+			var pathkey = i.toString();
+			for (var k = 0; k < sharechain.sharepath[i].array.length; k++) {
+				if (sharefather == sharechain.sharepath[i].array[k]){
+					count = i;
+					console.log('calc count is : '+count);
+					ShareChain.addShareChain(sharechain, currentShare, false, count, function(err){
+						if (err){
+							console.log('add share failed');
+							return callback(err);
+						}
+					});
+					return;
+				}		
+			};
+		};
+	}
+};
+
+ShareChain.addShareChain = function(sharechain, currentshare, isnew, count, callback){
+	var name = sharechain.name,
+		title = sharechain.title;
+
+	mongodb.open(function(err, db){
+		if (err){
+			return callback(err);
+		}
+
+		db.collection('sharechains', function(err, collection){
+			if (err){
+				mongodb.close();
+				return callback(err);
+			}
+
+			if (isnew){
+				//var pathkey = '"'+sharechain.sharecount.toString()+'"';
+				var pathkey = "0";
+				console.log(pathkey);
+				collection.update({"name": name, "title":title}, {$push:{"sharepath":{"array":[currentshare.name]}}}, 
+					function(err){
+						//mongodb.close();
+						if (err){
+							return callback(err);
+						}
+						//callback(null);
+					});
+				collection.update({"name":name, "title":title},{$inc:{"sharecount": 1}}, 
+					function(err){
+						mongodb.close();
+						if (err){
+							return callback(err);
+						}
+						callback(null);
+					});
+			}
+			else{
+				var pathkey = "sharepath" + "." + count.toString() + ".array";
+				var demo = {};
+				demo[pathkey] = currentshare.name;
+				console.log(demo);
+				console.log(pathkey);
+				collection.update({"name": name, "title":title}, {$push: demo}, 
+					function(err){
+						mongodb.close();
+						if (err){
+							return callback(err);
+						}
+						callback(null);
+					});
+			}
+		});
+	});
+};
+
+ShareChain.isUserShared = function(sharechain, currentuser, callback){
+	
 };
 
 
