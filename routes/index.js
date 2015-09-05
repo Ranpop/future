@@ -7,7 +7,7 @@ var User = require('../models/dbuser.js');
 var phoneAuth = require('../models/phoneauthuser.js');
 var Post = require('../models/post.js');
 var Jobs = require('../models/dbjobs.js');
-var ShareChain = require('../models/sharechain.js');
+var ShareChain = require('../models/sharechain_debug.js');
 var router = express.Router();
 var Comment = require('../models/comment.js');
 var Share = require('../models/share.js');
@@ -597,41 +597,55 @@ router.post('/wechat', Wechat(config, function (req, res, next) {
 	}
 }));
 
-	//shareset handler
+	//shareset handler the first sharing point
 router.get('/share/:publisher/:jobname/:sharerid/:sid', checkLogin);
 router.get('/share/:publisher/:jobname/:sharerid/:sid', function(req, res){
-	var newShare = new ShareChain(req.params.publisher,req.params.jobname);
-	ShareChain.getShare(newShare.name, newShare.title, function(err, sharechain){
-		if(sharechain){
-			console.log('sharechain have stroe');
-			ShareChain.calcShareChain(sharechain, req.session.user, function(sharechain){
 
-			});
+	var shareentity = {
+		job:{
+			publisher: req.params.publisher,
+			jobname: req.params.jobname
+		},
+		pair:{
+			father: null,
+			son: req.params.sharerid	
+		}
+	};
+	var newShare = new ShareChain(shareentity);
+
+	ShareChain.getShare(newShare.publisher, newShare.jobname, req.params.sharerid,function(err, sharechain){
+		if(sharechain){
+			console.log('[error]sharechain have stroe');
+			//ShareChain.calcShareChain(sharechain, req.session.user, function(sharechain){
+				// the sharer has shared this job info,give a false response
+				res.redirect('https://www.baidu.com/search/error.html');
+				return;
 		}
 		else{
-			newShare.save(function(err, user){
-				if(err){
-					console.log('store is not ok');
-				}
-				console.log('store is ok');
-			});
+				var share = new Share();
+				share.setShare(req.url, req.params.sid,function(err,sharedurlqrcode){
+					if(err){
+						console.log('share fail...');
+						res.redirect('https://www.baidu.com/search/error.html');
+						return;
+					}
+					console.log('share success...');
+					res.render('sharescan',{
+					title: "请扫描二维码分享",
+					qrcode: sharedurlqrcode,
+					success: req.flash('success').toString(),
+					error: req.flash('error').toString()
+					});	
+					console.log('share success...11');
+				});
+
+				newShare.save(function(err, user){
+					if(err){
+						console.log('store is not ok');
+					}
+					console.log('store is ok');
+				});
 		}
-	});
-	var share = new Share();
-	share.setShare(req.url, req.params.sid,function(err,sharedurlqrcode){
-		if(err){
-			console.log('share fail...');
-			res.redirect('https://www.baidu.com/search/error.html');
-			return;
-		}
-		console.log('share success...');
-		res.render('sharescan',{
-		title: "请扫描二维码分享",
-		qrcode: sharedurlqrcode,
-		success: req.flash('success').toString(),
-		error: req.flash('error').toString()
-		});	
-		console.log('share success...11');
 	});
 });	
 

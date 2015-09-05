@@ -71,12 +71,12 @@
 				<% if (user) { %>
 				<a class="btn btn-success" href="javascript:shareIndAppear();" role="button">
 					<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-					微信分享赚外快
+					微信分享
 				</a>
 				<% } else { %>
 				<a class="btn btn-success" data-toggle="modal" data-target="#myModal" data-whatever="share" role="button">
 					<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-					微信分享赚外快
+					微信分享
 				</a>
 				<% } %>
 			</li>
@@ -84,22 +84,22 @@
 				<% if (user) { %>
 				<a class="btn btn-info" href="/sendresumesimple/<%= job.publisher %>/<%= job.jobname %>/<%= sharer%>/<%= user.name%>" role="button">
 					<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-					自己投简历</a>
+					应聘</a>
 				<% } else { %>
 				<a class="btn btn-info" data-toggle="modal" data-target="#myModal" data-whatever="send" role="button">
 					<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-					自己投简历</a>
+					应聘</a>
 				<% } %>
 			</li>
  			<li>
 				<a class="btn btn-warning" href="/" role="button">
-					进入主页
+					主页
 					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 				</a>
 			</li>
 			<li>
 				<a class="btn btn-warning" href="/blog" role="button">
-					查看更多职位
+					更多
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 				</a>
 			</li>
@@ -145,11 +145,11 @@
 
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
-    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
     <!-- Socket io JavaScript -->
-    <script src="/bootstrap/dist/js/socket.io.js"></script>
+    <script src="/bootstrap/cust-js/socket.io.js"></script>
     <!-- AuthCodeGen websocket JavaScript -->
-    <script src="/bootstrap/dist/js/authcode-ws-client.js"></script>  
+    <script src="/bootstrap/cust-js/authcode-ws-client.js"></script>  
 
 	<script type="text/javascript"> //initiating jQuery 
 	$('#myModal').on('show.bs.modal', function (event) {

@@ -60,8 +60,42 @@ sessionSockets.on('connection', function (err, socket, session) {
 
     socket.on('addnewshare_req', function (newshare) {
         console.log('addnewshare_req-newsharerid:' + newshare.newsharerid + '-presharerid:' + 
-            newshare.presharerid + '-postname:' + newshare.post.name);
-        socket.emit('addnewshare_resp','RET_ADDNEWSHARE_SUC');
+            newshare.presharerid + '-postname:' + newshare.post.publisher + '-jobname:' + newshare.post.jobname);
+
+            var shareentity = {
+                job:{
+                    publisher: newshare.post.publisher,
+                    jobname: newshare.post.jobname
+                },
+                pair:{
+                    father: newshare.presharerid,
+                    son: newshare.newsharerid    
+                }
+            };
+            var newShare = new ShareChain(shareentity);
+
+            ShareChain.getShare(newShare.publisher, newShare.jobname, req.params.sharerid,function(err, sharechain){
+                if(sharechain){
+                    console.log('[error]sharechain have stroe');
+                        socket.emit('addnewshare_resp','RET_ADDNEWSHARE_ERR_ALREADYHAVE');
+                        return;
+                }
+                else{
+                        newShare.save(function(err, user){
+                            if(err){
+                                console.log('store is not ok');
+                                socket.emit('addnewshare_resp','RET_ADDNEWSHARE_ERR_STOREFAIL');
+                                return;
+                            }
+                            console.log('store is ok');
+                            socket.emit('addnewshare_resp','RET_ADDNEWSHARE_ERR_SUCC');
+                            return;
+                        });
+                }
+            });
+
+
+        
     });
 
     socket.on('upload_req', function (servierid) {
