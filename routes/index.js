@@ -154,17 +154,16 @@ router.get('/reg', function(req, res){
 
 router.post('/reg', checkNotLogin);
 router.post('/reg', function(req, res){
-	console.log("req is ",req.body);
+	//console.log("req is ",req.body);
 	//console.log("open database1.0");
-	//var	User = require('../models/dbuser.js');
 	var name = req.body.name,
 		password = req.body.password,
 		password_re = req.body['password-repeat'],
 		phonenum = req.body.phonenum;
 		
 	//检验用户两次输入的密码是否一致
-	console.log("password:"+password);
-	console.log("password_re:"+password_re);
+	//console.log("password:"+password);
+	//console.log("password_re:"+password_re);
 	if(password_re != password){
 		req.flash('error', '两次输入的密码不一致！');
 		return res.redirect('/reg');//返回注册页

@@ -57,8 +57,8 @@ ShareChain.getShare = function(publisher,jobname,son,callback){
 				"jobname": jobname,
 				"son": son
 			}, function(err, sharechain){
+				mongodb.close();
 				if(err){
-					mongodb.close();
 					return callback(err);
 				}
 				

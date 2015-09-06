@@ -211,7 +211,6 @@ Post.getOne = function(name, day, title, callback){
 				"title": title
 			}, function(err, doc){
 				if(err){
-					console.log('2');
 					mongodb.close();
 					return callback(err);
 				}
@@ -227,15 +226,9 @@ Post.getOne = function(name, day, title, callback){
 					}, function(err){
 						mongodb.close();
 						if(err){
-							console.log('3');
 							return callback(err);
 						}
 					});
-					//doc.post = markdown.toHTML(doc.post);
-					//console.log(doc.comments);
-					//doc.comments.forEach(function(comment){
-					//	comment.content = markdown.toHTML(comment.content);
-					//});
 					callback(null, doc);
 				}
 			});
@@ -318,6 +311,7 @@ Post.remove = function(name, day, title, callback){
 			}, {
 				w: 1
 			}, function(err){
+				mongodb.close();
 				if(err){
 					return callback(err);
 				}

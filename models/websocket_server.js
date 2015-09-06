@@ -22,7 +22,7 @@ var sessionSockets = new SessionSockets(io, sessionStore, sessionParse, sessionK
 
 sessionSockets.on('connection', function (err, socket, session) {
     console.log(socket.id + ': connection');
-    console.log(session);
+    //console.log(session);
 
     socket.on('disconnect', function () {
         console.log(socket.id + ': disconnect');

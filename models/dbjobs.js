@@ -141,9 +141,9 @@ Jobs.getOne = function(publisher, jobname, callback){
 				"publisher": publisher,
 				"jobname": jobname
 			}, function(err, doc){
+				mongodb.close();
 				if(err){
 					console.log('2');
-					mongodb.close();
 					return callback(err);
 				}
 				callback(null, doc);

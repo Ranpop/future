@@ -107,8 +107,8 @@ ShareChain.getShare = function(name, title, callback){
 				"name": name,
 				"title": title
 			}, function(err, sharechain){
+				mongodb.close();
 				if(err){
-					mongodb.close();
 					return callback(err);
 				}
 				
@@ -133,7 +133,6 @@ ShareChain.calcShareChain = function(sharechain, sharefather, currentShare, call
 	}
 	else{
 		for (var i=0; i < sharechain.sharecount; i++){
-			var pathkey = i.toString();
 			for (var k = 0; k < sharechain.sharepath[i].array.length; k++) {
 				if (sharefather == sharechain.sharepath[i].array[k]){
 					count = i;
@@ -202,7 +201,19 @@ ShareChain.addShareChain = function(sharechain, currentshare, isnew, count, call
 };
 
 ShareChain.isUserShared = function(sharechain, currentuser, callback){
-	
+	if (0 == sharechain.sharecount){
+		return callback(false);
+	};
+
+	for (var i=0; i < sharechain.sharecount; i++){
+		for (var k = 0; k < sharechain.sharepath[i].length; k++) {
+			if (currentuser.name == sharechain.sharepath[i].array[k].name){
+				return callback(true);
+			}
+		};
+	};
+
+	return callback(false);
 };
 
 
