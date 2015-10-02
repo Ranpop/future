@@ -1,14 +1,15 @@
-/**
- * route index.js
- * author: willian12345@126.com
- * github: https://github.com/willian12345/wechat-JS-SDK-demo
- * time: 2015-1-27
- */
-
 var http = require("http");
 var https = require("https");
 var sha1 = require('sha1');
 var querystring = require('querystring');
+var config = {
+  token: 'ranpopwechat',
+  appid: 'wx52c2d4b50da7ed77',
+  encodingAESKey: 'xeeeR6HqdU0rNNbYwzfh9OgPJeRA9Kmv6hEnu5G83sI'
+};
+var Wechat = require('wechat');
+var API = require('wechat-api');
+var api = new API('wx52c2d4b50da7ed77', '230cd9497f43cbebe9cbdc7031230e90');
 
 module.exports = function(app){
 	// 输出数字签名对象
@@ -173,4 +174,54 @@ module.exports = function(app){
 		})
 	 	
 	});
+//for ranpop's wechat
+app.post('/wechat', Wechat(config, function (req, res, next) {
+	// 微信输入信息都在req.weixin上
+	var message = req.weixin;
+	console.log(message);
+
+	if((message.MsgType == 'event') && (message.Event == 'subscribe')){
+		var reqarticle = '<a href=\"http://www.smartcreate.net/blog\">1. 看看文章休息下</a>';
+		var reqregist = '<a href=\"http://www.smartcreate.net/reg\">2. 注册一下</a>';
+		var reqlogin = '<a href=\"http://www.smartcreate.net/login\">3. 登录一下</a>';
+		var reqempty = '        ';
+		var reqstr = '感谢您的关注！' + '\n' + reqempty + '\n' + reqarticle + '\n' + reqempty + '\n' +
+			reqregist + '\n' + reqempty + '\n' + reqlogin + '\n' + reqempty + '\n';
+
+		res.reply(reqstr);
+	}
+
+	switch (message.MsgType){
+		case 'image':
+			res.reply([
+			{
+				title: '图片消息',
+        		description: '你发送了一张图片哦',
+        		picurl: message.PicUrl,
+        		url: message.PicUrl
+      		}
+      		]);
+		break;
+
+		case 'text':
+		res.reply({
+			content: '你发送了一条文本: '+ '\n' + message.Content,
+			type: 'text'
+		});
+		break;
+
+		case 'voice':
+		res.reply({
+			title: "来段音乐吧",
+        	description: "see u again",
+        	musicUrl: "http://play.baidu.com/?__m=mboxCtrl.playSong&__a=99751993&__o=/top/huayu||songListIcon&fr=-1||www.baidu.com#",
+        	hqMusicUrl: "http://play.baidu.com/?__m=mboxCtrl.playSong&__a=99751993&__o=/top/huayu||songListIcon&fr=-1||www.baidu.com#",
+        	thumbMediaId: message.MediaId
+		});
+		break;
+
+		default:
+		break;
+	}
+}));
 };
