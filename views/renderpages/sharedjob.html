@@ -165,19 +165,12 @@
 
 	function shareIndAppear(){
 		console.log('shareIndAppear');
-		//window.location.replace(window.location.href)
-		$.ajax({
-			url: window.location.href,
-			type: 'get',
-			data: {num: user_phoneno},
-			dataType: 'json'
-		});
-		$("#mcover").css("display","block")    // 分享给好友按钮触动函数
-			 //to do inform the system the new sharer
-			 <% if (user) { %>
-			 	user_phoneno = '<%= user.name%>';
-			 <% } %>
-			 addnewsharerjs(user_phoneno,'<%= sharer%>','<%= job.publisher %>','<%= job.jobname %>');		
+		$("#mcover").css("display","block");    // 分享给好友按钮触动函数
+		 //to do inform the system the new sharer
+		 <% if (user) { %>
+		 	user_phoneno = '<%= user.name%>';
+		 <% } %>
+		 addnewsharerjs(user_phoneno,'<%= sharer%>','<%= job.publisher %>','<%= job.jobname %>');		
 	}
 	function shareIndDisappear(){
 		console.log('shareIndDisappear');

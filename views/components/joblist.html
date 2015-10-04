@@ -29,7 +29,7 @@
                                   <p>发布于<%= job.time.minute %></p>
                                 </td>
                                 <td>基本年薪 <%= job.jobsalary %></td>
-                                <td>已有 <%= job.jobsalary %>分享了该职位，</br>每个人可获得奖金<%= job.jobsalary %>元</td>
+                                <td>已有 <%= job.jobsharetimes %>人分享了该职位，</br>每个人可获得奖金<%= job.jobjiangjin/job.jobsharetimes %>元</td>
                             </tr>
                         <% count = count + 1; %>
                         <% } %>

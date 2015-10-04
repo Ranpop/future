@@ -10,6 +10,7 @@ function Jobs(job){
 	this.jobrequire = job.jobrequire;
 	this.jobothers = job.jobothers;
 	this.jobjiangjin = job.jobjiangjin;
+	this.jobsharetimes = job.jobsharetimes;
 };
 
 module.exports = Jobs;
@@ -39,7 +40,8 @@ console.log("[derek debug]-Jobsave 3");
 		jobfuli: this.jobfuli,
 		jobrequire: this.jobrequire,
 		jobothers: this.jobothers,
-		jobjiangjin: this.jobjiangjin
+		jobjiangjin: this.jobjiangjin,
+		jobsharetimes: this.jobsharetimes
 	};
 	console.log("[derek debug]-Job 4");
 	//打开数据库
@@ -150,6 +152,53 @@ Jobs.getOne = function(publisher, jobname, callback){
 				}
 				callback(null, doc);
 			});
+		});
+	});
+};
+//更新
+Jobs.increaseShareTimes = function(publisher, jobname, callback){
+	mongodb.open(function(err, db){
+		if(err){
+			return callback(err);
+		}
+		db.collection('jobs', function(err, collection){
+			if(err){
+				mongodb.close();
+				return callback(err);
+			}
+
+			collection.findOne({
+				"publisher": publisher,
+				"jobname": jobname
+			}, function(err, job){
+
+				if(err){
+					mongodb.close();
+					console.log('2');
+					return callback(err);
+				}
+
+				var times = job.jobsharetimes + 1;
+				console.log('increaseShareTimes-findok-updateing...');
+				collection.update({
+					"publisher": publisher,
+					"jobname": jobname
+				}, {
+					$set: {jobsharetimes: times}
+				}, function(err){
+					mongodb.close();
+					if(err){
+						console.log('increaseShareTimes-updatefail...');
+						return callback(err);
+					}
+					console.log('increaseShareTimes-updateok!');
+					callback(null);
+				});
+			});
+
+
+
+
 		});
 	});
 };

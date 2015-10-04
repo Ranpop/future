@@ -8,6 +8,7 @@ var appIds = getAppsInfo();
 var io = require('socket.io')();
 var SessionSockets = require('session.socket.io');
 var ShareChain = require('./sharechain_debug');
+var Job = require('./dbjobs');
 var sessionParse,
     sessionStore,
     sessionKey;
@@ -88,6 +89,15 @@ sessionSockets.on('connection', function (err, socket, session) {
                                 return;
                             }
                             console.log('store is ok');
+                            //increase the sharetimes of this job
+                            Job.increaseShareTimes(newShare.publisher, newShare.jobname, function(err){
+                                if(err){
+                                    console.log('increase sharetimes fail');
+                                    socket.emit('addnewshare_resp','RET_ADDNEWSHARE_ERR_INCREASESHARETIMEFAIL');
+                                    return;
+                                }
+                                console.log('increase sharetimes ok');
+                            });
                             socket.emit('addnewshare_resp','RET_ADDNEWSHARE_ERR_SUCC');
                             return;
                         });

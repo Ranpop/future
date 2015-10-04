@@ -51,7 +51,8 @@ app.post('/postjob', function(req, res){
 		jobfuli: req.body.jobfuli,
 		jobrequire: req.body.jobrequire,
 		jobothers: req.body.jobothers,
-		jobjiangjin: req.body.jiangjin
+		jobjiangjin: req.body.jiangjin,
+		jobsharetimes: 0,
 	});
 	console.log("[derek debug]-3");
 	job.save(function(err){
@@ -265,7 +266,15 @@ app.get('/share/:publisher/:jobname/:sharerid/:sid', function(req, res){
 				newShare.save(function(err, user){
 					if(err){
 						console.log('store is not ok');
+						return;
 					}
+                    Jobs.increaseShareTimes(newShare.publisher, newShare.jobname, function(err){
+                        if(err){
+                            console.log('increase sharetimes fail');
+                            return;
+                        }
+                        console.log('increase sharetimes ok');
+                    });
 					console.log('store is ok');
 				});
 		}
