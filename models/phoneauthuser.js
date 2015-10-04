@@ -23,7 +23,7 @@ exports.storePhoneUser = function(phonenum, authCode, sessionAu, sessionPh, call
 		phonenum: phonenum
 	});
 
-	User.getFromPhoneNum(authUser.phonenum, function(err, user){
+	User.getbyPhoneNum(authUser.phonenum, function(err, user){
 		if(user){
 			//用户存在，进入分享链条处理
 			console.log('用户存在，进入分享链条处理')

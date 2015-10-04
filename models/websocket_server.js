@@ -7,7 +7,7 @@ var getAppsInfo = require('./apps-info'); // 从外部加载app的配置信息
 var appIds = getAppsInfo();
 var io = require('socket.io')();
 var SessionSockets = require('session.socket.io');
-
+var ShareChain = require('./sharechain_debug');
 var sessionParse,
     sessionStore,
     sessionKey;
@@ -74,7 +74,7 @@ sessionSockets.on('connection', function (err, socket, session) {
             };
             var newShare = new ShareChain(shareentity);
 
-            ShareChain.getShare(newShare.publisher, newShare.jobname, req.params.sharerid,function(err, sharechain){
+            ShareChain.getShare(newShare.publisher, newShare.jobname, newshare.newsharerid,function(err, sharechain){
                 if(sharechain){
                     console.log('[error]sharechain have stroe');
                         socket.emit('addnewshare_resp','RET_ADDNEWSHARE_ERR_ALREADYHAVE');

@@ -70,7 +70,7 @@ User.get = function(name, callback){
 };
 
 //读取用户信息
-User.getFromPhoneNum = function(phonenum, callback){
+User.getbyPhoneNum = function(phonenum, callback){
 	//打开数据库
 	mongodb.open(function(err, db){
 		if(err){

@@ -9,6 +9,7 @@ function Jobs(job){
 	this.jobfuli = job.jobfuli;
 	this.jobrequire = job.jobrequire;
 	this.jobothers = job.jobothers;
+	this.jobjiangjin = job.jobjiangjin;
 };
 
 module.exports = Jobs;
@@ -37,7 +38,8 @@ console.log("[derek debug]-Jobsave 3");
 		joblocation: this.joblocation,
 		jobfuli: this.jobfuli,
 		jobrequire: this.jobrequire,
-		jobothers: this.jobothers
+		jobothers: this.jobothers,
+		jobjiangjin: this.jobjiangjin
 	};
 	console.log("[derek debug]-Job 4");
 	//打开数据库

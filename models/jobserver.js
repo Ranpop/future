@@ -41,6 +41,7 @@ app.post('/postjob', function(req, res){
 	var currentUser = req.session.user;
 
 	console.log("[derek debug]-2-" + ' ' + currentUser.name + ' ' + jobname + ' ' + req.body.jobsalary + ' ' + req.body.joblocation + ' ' + req.body.jobfuli + ' ' + req.body.jobrequire + ' ' + req.body.jobothers);
+
 	var job = new Jobs(
 	{
 		publisher: currentUser.name,
@@ -49,7 +50,8 @@ app.post('/postjob', function(req, res){
 		joblocation: req.body.joblocation,
 		jobfuli: req.body.jobfuli,
 		jobrequire: req.body.jobrequire,
-		jobothers: req.body.jobothers
+		jobothers: req.body.jobothers,
+		jobjiangjin: req.body.jiangjin
 	});
 	console.log("[derek debug]-3");
 	job.save(function(err){
@@ -275,7 +277,7 @@ app.get('/share/:publisher/:jobname/:sharerid', function(req, res){
 	console.log(req.url);
 	console.log('share wwwwww');
 	if (req.query.num){
-		User.getFromPhoneNum(req.query.num, function(err, user)		{
+		User.getbyPhoneNum(req.query.num, function(err, user)		{
 			if(!user){
 				console.log('can not find a user somewhere is wrong');
 				res.redirect('https://www.baidu.com/search/error.html');
